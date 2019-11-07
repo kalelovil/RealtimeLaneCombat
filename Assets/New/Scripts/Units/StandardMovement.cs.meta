@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: cdb1e915d78bcff4fafb5f023f7713c1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _currentNode: {instanceID: 0}
+  - _currentPath: {instanceID: 0}
+  - _image: {instanceID: 0}
+  - _animator: {instanceID: 0}
+  - _movementDisplayArea: {instanceID: 0}
+  - _movementDisplayPrefab: {fileID: 4767828331939309209, guid: 073cb1b384df7264e909d1308575eab1,
+      type: 3}
+  - _movementDisplay: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

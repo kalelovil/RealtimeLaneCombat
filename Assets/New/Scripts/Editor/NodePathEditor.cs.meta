@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 2d86588289fae544dbbcb67ab949c808
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _bridgePrefab: {fileID: 1249240921143117873, guid: eabbb00f540a1aa44a1f0da955945c64,
+      type: 3}
+  - _forestTerrainPrefab: {fileID: 2989105425122342890, guid: a363ad7db5c742446804cb28aaae3b75,
+      type: 3}
+  - _hillsTerrainPrefab: {fileID: 6862264212249337728, guid: 29176875de2e59d41b9b0c61ed8435a8,
+      type: 3}
+  - _mountainsTerrainPrefab: {fileID: 682126168814929303, guid: 2e0027b5e96113f42ab0b51eb58689cd,
+      type: 3}
+  - _swampTerrainPrefab: {fileID: 2334963827622942476, guid: e6bb28cd8bc59ed4bbc30798cf345ee1,
+      type: 3}
+  - _waterTerrainPrefab: {fileID: 8476920957099441549, guid: ef5ecbe7c4c8c454d9a0f12db9921b44,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

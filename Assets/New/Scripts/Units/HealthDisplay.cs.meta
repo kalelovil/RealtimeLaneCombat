@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ec02e88168d31ff4b817ef755170449c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _healthPointPrefab: {fileID: 7827221903118124283, guid: db9d45713341c114883789a1068470aa,
+      type: 3}
+  - _healthPointArea: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

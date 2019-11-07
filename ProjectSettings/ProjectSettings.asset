@@ -590,7 +590,10 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
-    Build: 1
+    Build: 0
+    Collab: 0
+    ErrorHub: 0
+    Hub: 0
     UNet: 1
   luminIcon:
     m_Name: 
@@ -611,9 +614,9 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: 78352592-bf7a-4ece-8e66-1db2fba57fba
+  cloudProjectId: bafc6198-3d38-44ef-be18-9a454a23e340
   framebufferDepthMemorylessMode: 0
-  projectName: RayzorPOC
+  projectName: RealtimeLaneCombat
   organizationId: kalelovil
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0

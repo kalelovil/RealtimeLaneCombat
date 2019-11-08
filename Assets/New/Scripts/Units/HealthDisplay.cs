@@ -14,7 +14,7 @@ internal class HealthDisplay : MonoBehaviour
     {
         _pointColor = _healthPointPrefab.color;
     }
-    internal void PointsChanged(int currentHealth, int totalHealth)
+    internal void ValueChanged(float currentHealth, float totalHealth)
     {
         // Clear Points
         foreach (var point in _healthPointList)

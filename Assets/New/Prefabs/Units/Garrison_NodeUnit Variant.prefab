@@ -156,6 +156,16 @@ PrefabInstance:
       propertyPath: _totalMovementPoints
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4792998134944352243, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: _totalMovementSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792998134944352243, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: _baseMovementSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9028953918830407676, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
       propertyPath: m_Sprite

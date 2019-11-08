@@ -13,7 +13,7 @@ public class Card_Deck : MonoBehaviour
 
     [SerializeField] DeckGenerator _deckGenerator;
 
-    private void Start()
+    private void Awake()
     {
         _cardsInDeckStack = _deckGenerator.GenerateNewDeck(_startingDeckSize, transform);
     }

@@ -122,6 +122,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 687857916280436204, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: _attackPoints
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1070662668213011648, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
       propertyPath: _totalHealthPoints
@@ -132,16 +137,21 @@ PrefabInstance:
       propertyPath: _totalMovementPoints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4792998134944352243, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: _totalMovementSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792998134944352243, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: _baseMovementSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 9028953918830407676, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: d93e15de8d49edf41be3788cad3a27f5,
         type: 3}
-    - target: {fileID: 687857916280436204, guid: 9d14d05fa604dcb4a806d2102a792477,
-        type: 3}
-      propertyPath: _attackPoints
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d14d05fa604dcb4a806d2102a792477, type: 3}

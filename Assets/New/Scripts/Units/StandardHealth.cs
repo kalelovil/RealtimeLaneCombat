@@ -13,7 +13,7 @@ public class StandardHealth : MonoBehaviour
     private void SetCurrentNovementPoints(int value)
     {
         _currentHealthPoints = Mathf.Max(0, value);
-        if (_healthDisplay) _healthDisplay.PointsChanged(CurrentHealthPoints, TotalHealthPoints);
+        if (_healthDisplay) _healthDisplay.ValueChanged(CurrentHealthPoints, TotalHealthPoints);
     }
 
     internal List<HealthUpgradeCardAbility> _upgradeList = new List<HealthUpgradeCardAbility>();

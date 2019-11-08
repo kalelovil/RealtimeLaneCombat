@@ -43,6 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70701f9254f01a94791f1133f6026d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _totalLogisticPoints: 0
+  _currentLogisticPoints: 0
   _units: []
   _selectedUnit: {fileID: 0}
 --- !u!1 &4258591614978474766
@@ -54,7 +56,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4258591614978474764}
-  - component: {fileID: 4258591614978474767}
+  - component: {fileID: 9038229235373420109}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -78,7 +80,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4258591614978474767
+--- !u!114 &9038229235373420109
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,14 +89,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4258591614978474766}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 861b1915059152747bf5c0136dd43bc6, type: 3}
+  m_Script: {fileID: 11500000, guid: e615a617946f88247a508d88f251685b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentTurnNum: 1
+  _currentHourNum: 1
   _sideList:
   - {fileID: 4258591615597364500}
   - {fileID: 4258591613873487623}
-  _currentSideIndex: 0
 --- !u!1 &4258591615597364502
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,5 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d36284f831d8664ebfdc94031f873cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _totalLogisticPoints: 0
+  _currentLogisticPoints: 0
   _units: []
   _selectedUnit: {fileID: 0}

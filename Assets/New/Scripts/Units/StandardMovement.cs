@@ -8,14 +8,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(NodeUnit))]
 public class StandardMovement : MonoBehaviour
 {
-    [SerializeField] int _totalMovementSpeed;
-    public int TotalMovementSpeed { get { return _totalMovementSpeed; } }
-    [SerializeField] private int _currentMovementSpeed;
-    public int CurrentMovementSpeed { get { return _currentMovementSpeed; } set { SetCurrentNovementSpeed(value); } }
-    private void SetCurrentNovementSpeed(int value)
+    [SerializeField] float _baseMovementSpeed;
+    public float BaseMovementSpeed { get { return _baseMovementSpeed; } }
+    [SerializeField] private float _currentMovementSpeed;
+    public float CurrentMovementSpeed { get { return _currentMovementSpeed; } set { SetCurrentNovementSpeed(value); } }
+    private void SetCurrentNovementSpeed(float value)
     {
         _currentMovementSpeed = Mathf.Max(0, value);
-        if (_movementDisplay) _movementDisplay.PointsChanged(CurrentMovementSpeed, TotalMovementSpeed);
+        if (_movementDisplay) _movementDisplay.ValueChanged(CurrentMovementSpeed, BaseMovementSpeed);
     }
 
     [SerializeField] Node _currentNode;
@@ -85,35 +85,36 @@ public class StandardMovement : MonoBehaviour
             var nextNode = _path.Pop();
 
             var nextConnection = nextNode.GetConnectionToNode(CurrentNode);
-            int pathCost = GetPathCost(nextConnection);
-            CurrentMovementSpeed -= pathCost;
+            float pathSpeedFactor = GetPathSpeedFactor(nextConnection);
+            CurrentMovementSpeed = BaseMovementSpeed * pathSpeedFactor;
 
             CurrentNode = (Node)nextNode;
             CurrentConnection = nextConnection;
         }
     }
 
-    private int GetPathCost(NodeConnection nextNodePath)
+    private float GetPathSpeedFactor(NodeConnection nextNodePath)
     {
         // TODO Temporary
-        return nextNodePath._movementPointCost;
+        return 1f / nextNodePath._movementPointCost;
     }
 
     private IEnumerator ImageCatchUp()
     {
         float delta = Vector2.Distance(_image.transform.position, transform.position);
         Vector2 startPos = _image.transform.position, endPos = transform.position;
-        float currentTime = 0f, moveTime = 2f;
+        float currentTime = 0f, moveTime = 10f / CurrentMovementSpeed;
         while (currentTime < moveTime)
         {
-            float timeFration = currentTime / moveTime;
+            float timeFraction = currentTime / moveTime;
             //Debug.Log($"Time Fraction: {timeFration}");
-            _image.transform.position = Vector2.Lerp(startPos, endPos, timeFration);
+            _image.transform.position = Vector2.Lerp(startPos, endPos, timeFraction);
             yield return null;
             currentTime += Time.deltaTime;
         }
         _image.transform.position = transform.position;
         CurrentConnection = null;
+        CurrentMovementSpeed = BaseMovementSpeed;
     }
 
     Path _path;
@@ -142,6 +143,6 @@ public class StandardMovement : MonoBehaviour
         {
             _movementDisplay = Instantiate(_movementDisplayPrefab, _movementDisplayArea);
         }
-        CurrentMovementSpeed = TotalMovementSpeed;
+        CurrentMovementSpeed = BaseMovementSpeed;
     }
 }

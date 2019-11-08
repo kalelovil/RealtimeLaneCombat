@@ -20,29 +20,26 @@ public class Card_Deck : MonoBehaviour
 
     private void OnEnable()
     {
-        TurnManager.CurrentSideChangedAction += CurrentSideChanged;
+        DateManager.CurrentDayChangedAction += CurrentDayChanged;
     }
 
     private void OnDisable()
     {
-        TurnManager.CurrentSideChangedAction -= CurrentSideChanged;
+        DateManager.CurrentDayChangedAction -= CurrentDayChanged;
     }
 
-    private void CurrentSideChanged(AbstractPlayerManager prevSide, AbstractPlayerManager currentSide)
+    private void CurrentDayChanged(int dayNum)
     {
-        if (currentSide is HumanPlayerManager)
+        if (dayNum == 1)
         {
-            if (TurnManager.Instance.CurrentTurnNum == 1)
-            {
-                while (_cardHand.CanAddCard)
-                {
-                    DealCard();
-                }
-            }
-            else if (_cardHand.CanAddCard)
+            while (_cardHand.CanAddCard)
             {
                 DealCard();
             }
+        }
+        else if (_cardHand.CanAddCard)
+        {
+            DealCard();
         }
     }
 

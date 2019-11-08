@@ -11,7 +11,7 @@ public class SummonCardAbility : CardAbility
     {
         if (node.NodeFeature)
         {
-            if (node.ControllingSide == TurnManager.Instance.CurrentSide)
+            if (node.ControllingSide == HumanPlayerManager.Instance)
             {
                 if (!node.CurrentUnit)
                 {
@@ -25,6 +25,6 @@ public class SummonCardAbility : CardAbility
     public override void ActivateOn(Node node)
     {
         NodeUnit unit = Instantiate(_unitPrefab, MapManager.Instance._unitParent);
-        unit.Initialise(TurnManager.Instance.CurrentSide, node);
+        unit.Initialise(node);
     }
 }

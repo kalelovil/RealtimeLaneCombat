@@ -82,9 +82,9 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
         // TODO Refactor
         if (selectedCard)
         {
-            bool canBePlayedBy = selectedCard.CanBePlayedBy(TurnManager.Instance.CurrentSide);
+            bool canBePlayed = selectedCard.CanBePlayed();
             bool canBePlayedOn = selectedCard.CanBePlayedOn(this);
-            _nodeVisuals.SetPlayableOnVisualState(canBePlayedBy && canBePlayedOn);
+            _nodeVisuals.SetPlayableOnVisualState(canBePlayed && canBePlayedOn);
         }
         else
         {
@@ -106,7 +106,7 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
                 unitMovement.CurrentNode, 
                 this, 
                 Pathfinder.PathfindingType.Ground, 
-                unitMovement.CurrentMovementPoints
+                unitMovement.CurrentMovementSpeed
             ); 
             _nodeVisuals.SetMovableToVisualState(pathToNode != null);
         }
@@ -149,7 +149,7 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        InputManager.Instance.NodeClicked(this);
+        PlayerInputManager.Instance.NodeClicked(this);
     }
 
     public void GetObjectData(SerializationInfo info, StreamingContext context)

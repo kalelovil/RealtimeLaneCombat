@@ -12,32 +12,6 @@ public abstract class AbstractPlayerManager : MonoBehaviour
     public abstract LeftOrRight MapSide { get; }
     public abstract Color Colour { get; }
 
-    #region Action Points
-    [Header("Action Points")]
-    [SerializeField] int _totalActionPoints;
-    public int TotalActionPoints { get { return _totalActionPoints; } set { SetTotalActionPoints(value); } }
-    internal static Action<int, int> TotalActionPointsChangedAction;
-    private void SetTotalActionPoints(int value)
-    {
-        _totalActionPoints = value;
-        if (TurnManager.Instance.CurrentSide == this)
-        {
-            TotalActionPointsChangedAction?.Invoke(CurrentActionPoints, TotalActionPoints);
-        }
-    }
-
-    [SerializeField] int _currentActionPoints;
-    public int CurrentActionPoints { get { return _currentActionPoints; } set { SetCurrentActionPoints(value); } }
-    internal static Action<int, int> CurrentActionPointsChangedAction;
-    private void SetCurrentActionPoints(int value)
-    {
-        _currentActionPoints = value;
-        if (TurnManager.Instance.CurrentSide == this)
-        {
-            CurrentActionPointsChangedAction?.Invoke(CurrentActionPoints, TotalActionPoints);
-        }
-    }
-    #endregion
 
     #region Logistic Points
     [Header("Logistic Points")]
@@ -47,10 +21,9 @@ public abstract class AbstractPlayerManager : MonoBehaviour
     private void SetTotalLogisticPoints(int value)
     {
         _totalLogisticPoints = value;
-        if (TurnManager.Instance.CurrentSide == this)
-        {
-            TotalLogisticPointsChangedAction?.Invoke(CurrentLogisticPoints, TotalLogisticPoints);
-        }
+
+        TotalLogisticPointsChangedAction?.Invoke(CurrentLogisticPoints, TotalLogisticPoints);
+
     }
 
     [SerializeField] int _currentLogisticPoints;
@@ -59,10 +32,7 @@ public abstract class AbstractPlayerManager : MonoBehaviour
     private void SetCurrentLogisticPoints(int value)
     {
         _currentLogisticPoints = value;
-        if (TurnManager.Instance.CurrentSide == this)
-        {
-            CurrentLogisticPointsChangedAction?.Invoke(CurrentLogisticPoints, TotalLogisticPoints);
-        }
+        CurrentLogisticPointsChangedAction?.Invoke(CurrentLogisticPoints, TotalLogisticPoints);
     }
     #endregion
 
@@ -97,28 +67,20 @@ public abstract class AbstractPlayerManager : MonoBehaviour
 
     private void OnEnable()
     {
-        TurnManager.CurrentSideChangedAction += CurrentSideChanged;
-        TurnManager.CurrentTurnChangedAction += CurrentTurnChanged;
+        DateManager.CurrentDayChangedAction += CurrentTurnChanged;
     }
     private void OnDisable()
     {
-        TurnManager.CurrentSideChangedAction -= CurrentSideChanged;
-        TurnManager.CurrentTurnChangedAction -= CurrentTurnChanged;
+        DateManager.CurrentDayChangedAction -= CurrentTurnChanged;
     }
     private void CurrentTurnChanged(int turnNum)
     {
-        CurrentActionPoints = TotalActionPoints;
-
         TotalLogisticPoints++;
         CurrentLogisticPoints = TotalLogisticPoints;
-    }
-    private void CurrentSideChanged(AbstractPlayerManager prevSide, AbstractPlayerManager currentSide)
-    {
-        prevSide.SelectedUnit = null;
     }
 
     protected void Start()
     {
-        CurrentActionPoints = TotalActionPoints;
+
     }
 }

@@ -47,7 +47,7 @@ public class Card_Hand : MonoBehaviour
     {
         foreach (var card in _cardsInHandList)
         {
-            card.IsPlayable = (CardBase.Playable)Convert.ToInt32(card.CanBePlayedBy(TurnManager.Instance.CurrentSide));
+            card.IsPlayable = (CardBase.Playable)Convert.ToInt32(card.CanBePlayed());
         }
     }
 

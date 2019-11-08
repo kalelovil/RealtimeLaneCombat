@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class HumanPlayerManager : AbstractPlayerManager
 {
+    // TODO Reconfigue for multiplayer, always point to local player
+    public static HumanPlayerManager Instance;
+
     public override LeftOrRight MapSide
     {
         get { return LeftOrRight.Left; }
@@ -21,6 +24,11 @@ public class HumanPlayerManager : AbstractPlayerManager
     protected override void SetSelectedUnit_OverrideMethod(NodeUnit value)
     {
         //TODO Implement
+    }
+
+    private void Awake()
+    {
+        Instance = this;
     }
 
     // Update is called once per frame

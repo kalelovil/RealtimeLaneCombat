@@ -9,12 +9,12 @@ public class CurrentTurn_Panel : MonoBehaviour
 
     private void OnEnable()
     {
-        TurnManager.CurrentTurnChangedAction += CurrentTurnChanged;
+        DateManager.CurrentDayChangedAction += CurrentTurnChanged;
     }
 
     private void OnDisable()
     {
-        TurnManager.CurrentTurnChangedAction -= CurrentTurnChanged;
+        DateManager.CurrentDayChangedAction -= CurrentTurnChanged;
     }
 
     private void CurrentTurnChanged(int currentTurn)

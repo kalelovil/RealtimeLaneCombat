@@ -4,13 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class PlayerInputManager : MonoBehaviour
 {
-    AbstractPlayerManager CurrentSide { get { return TurnManager.Instance.CurrentSide; } }
-    NodeUnit SelectedUnit { get { return CurrentSide.SelectedUnit; } set { CurrentSide.SelectedUnit = value; } }
+    NodeUnit SelectedUnit { get { return HumanPlayerManager.Instance.SelectedUnit; } set { HumanPlayerManager.Instance.SelectedUnit = value; } }
     CardBase SelectedCard { get { return CardBase.Selected_Card; } }
 
-    public static InputManager Instance { get; internal set; }
+    public static PlayerInputManager Instance { get; internal set; }
 
     void Awake()
     {
@@ -26,10 +25,8 @@ public class InputManager : MonoBehaviour
     internal void UnitClicked(NodeUnit nodeUnit)
     {
         Debug.Log($"Unit Clicked: {nodeUnit}");
-        if (!(CurrentSide is HumanPlayerManager)) return;
 
-        if (nodeUnit.Side == CurrentSide
-            && !CardBase.Selected_Card.CanBePlayedOn(nodeUnit._standardMovement.CurrentNode))
+        if (!CardBase.Selected_Card || !CardBase.Selected_Card.CanBePlayedOn(nodeUnit._standardMovement.CurrentNode))
         {
             CardBase.Selected_Card = null;
             SelectedUnit = nodeUnit;
@@ -43,7 +40,6 @@ public class InputManager : MonoBehaviour
     internal void CardClicked(CardBase card)
     {
         Debug.Log($"Card Clicked: {card}");
-        if (!(CurrentSide is HumanPlayerManager)) return;
 
         SelectedUnit = null;
         CardBase.Selected_Card = card;
@@ -76,9 +72,9 @@ public class InputManager : MonoBehaviour
         {
             SelectedUnit.TaskInProgress = StartCoroutine(UnitNodeActionCoroutine(node));
         }
-        else if (SelectedCard && SelectedCard.CanBePlayedBy(CurrentSide) && SelectedCard.CanBePlayedOn(node))
+        else if (SelectedCard && SelectedCard.CanBePlayed() && SelectedCard.CanBePlayedOn(node))
         {
-            SelectedCard.Play(node, CurrentSide);
+            SelectedCard.Play(node);
             CardBase.Selected_Card = null;
         }
     }
@@ -114,7 +110,7 @@ public class InputManager : MonoBehaviour
             (
                 SelectedUnit._standardMovement.CurrentNode, 
                 node, Pathfinder.PathfindingType.Ground, 
-                SelectedUnit._standardMovement.CurrentMovementPoints
+                SelectedUnit._standardMovement.CurrentMovementSpeed
             );
             if (path != null)
             {

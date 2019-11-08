@@ -50,7 +50,7 @@ public class CardBase : MonoBehaviour, IPointerClickHandler
         {
             case CardState.InHand:
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
-                IsPlayable = (Playable)Convert.ToInt32(CanBePlayedBy(TurnManager.Instance.CurrentSide));
+                IsPlayable = (Playable)Convert.ToInt32(CanBePlayed());
                 break;
                 /*
             case CardState.InPlay:
@@ -98,7 +98,7 @@ public class CardBase : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        InputManager.Instance.CardClicked(this);
+        PlayerInputManager.Instance.CardClicked(this);
     }
 
     internal void Discard(Card_Discard cardDiscard)
@@ -107,20 +107,20 @@ public class CardBase : MonoBehaviour, IPointerClickHandler
         cardDiscard.AddCard(this);
     }
 
-    internal void Play(Node node, AbstractPlayerManager currentSide)
+    internal void Play(Node node)
     {
         if (CanBePlayedOn(node))
         {
-            currentSide.CurrentLogisticPoints -= Cost;
+            HumanPlayerManager.Instance.CurrentLogisticPoints -= Cost;
             _cardAbility.ActivateOn(node);
             Destroy(gameObject);
             Card_Hand.CardPlayedAction.Invoke(this);
         }
     }
 
-    internal bool CanBePlayedBy(AbstractPlayerManager side)
+    internal bool CanBePlayed()
     {
-        bool canBePlayed = (Cost <= side.CurrentLogisticPoints);
+        bool canBePlayed = (Cost <= HumanPlayerManager.Instance.CurrentLogisticPoints);
         return canBePlayed;
     }
     internal bool CanBePlayedOn(Node node)

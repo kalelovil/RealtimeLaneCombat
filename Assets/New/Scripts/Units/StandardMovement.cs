@@ -8,14 +8,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(NodeUnit))]
 public class StandardMovement : MonoBehaviour
 {
-    [SerializeField] int _totalMovementPoints;
-    public int TotalMovementPoints { get { return _totalMovementPoints; } }
-    [SerializeField] private int _currentMovementPoints;
-    public int CurrentMovementPoints { get { return _currentMovementPoints; } set { SetCurrentNovementPoints(value); } }
-    private void SetCurrentNovementPoints(int value)
+    [SerializeField] int _totalMovementSpeed;
+    public int TotalMovementSpeed { get { return _totalMovementSpeed; } }
+    [SerializeField] private int _currentMovementSpeed;
+    public int CurrentMovementSpeed { get { return _currentMovementSpeed; } set { SetCurrentNovementSpeed(value); } }
+    private void SetCurrentNovementSpeed(int value)
     {
-        _currentMovementPoints = Mathf.Max(0, value);
-        if (_movementDisplay) _movementDisplay.PointsChanged(CurrentMovementPoints, TotalMovementPoints);
+        _currentMovementSpeed = Mathf.Max(0, value);
+        if (_movementDisplay) _movementDisplay.PointsChanged(CurrentMovementSpeed, TotalMovementSpeed);
     }
 
     [SerializeField] Node _currentNode;
@@ -61,22 +61,17 @@ public class StandardMovement : MonoBehaviour
 
     public void OnEnable()
     {
-        TurnManager.CurrentTurnChangedAction += CurrentTurnChanged;
+        //DateManager.CurrentDayChangedAction += CurrentTurnChanged;
     }
     public void OnDisable()
     {
-        TurnManager.CurrentTurnChangedAction -= CurrentTurnChanged;
-    }
-    private void CurrentTurnChanged(int turnNum)
-    {
-        CurrentMovementPoints = TotalMovementPoints;
+        //DateManager.CurrentDayChangedAction -= CurrentTurnChanged;
     }
 
     internal void Initialise(AbstractPlayerManager side, Node node)
     {
         _image.color = side.Colour;
         CurrentNode = node;
-        CurrentTurnChanged(1);
     }
     private void OnDestroy()
     {
@@ -91,7 +86,7 @@ public class StandardMovement : MonoBehaviour
 
             var nextConnection = nextNode.GetConnectionToNode(CurrentNode);
             int pathCost = GetPathCost(nextConnection);
-            CurrentMovementPoints -= pathCost;
+            CurrentMovementSpeed -= pathCost;
 
             CurrentNode = (Node)nextNode;
             CurrentConnection = nextConnection;
@@ -147,6 +142,6 @@ public class StandardMovement : MonoBehaviour
         {
             _movementDisplay = Instantiate(_movementDisplayPrefab, _movementDisplayArea);
         }
-        CurrentMovementPoints = TotalMovementPoints;
+        CurrentMovementSpeed = TotalMovementSpeed;
     }
 }

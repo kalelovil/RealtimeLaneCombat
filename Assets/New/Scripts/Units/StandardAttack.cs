@@ -48,7 +48,7 @@ public class StandardAttack : MonoBehaviour
         {
             if (path.Value._node1 == _standardMovement.CurrentNode || path.Value._node2 == _standardMovement.CurrentNode)
             {
-                if (_standardMovement.CurrentMovementPoints >= path.Value._movementPointCost)
+                if (_standardMovement.CurrentMovementSpeed >= path.Value._movementPointCost)
                 {
                     return true;
                 }
@@ -78,7 +78,7 @@ public class StandardAttack : MonoBehaviour
         // TODO Should attack cost equal path cost?
         if (attackType == AttackType.Instigation)
         {
-            _standardMovement.CurrentMovementPoints -= 1;
+            _standardMovement.CurrentMovementSpeed -= 1;
         }
         //
     }

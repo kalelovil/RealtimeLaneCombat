@@ -38,7 +38,7 @@ public class Card_Discard : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        InputManager.Instance.DiscardClicked(this);
+        PlayerInputManager.Instance.DiscardClicked(this);
     }
 
     internal void AddCard(CardBase cardBase)

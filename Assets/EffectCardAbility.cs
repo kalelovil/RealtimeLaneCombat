@@ -36,7 +36,7 @@ public class EffectCardAbility : CardAbility
         {
             if (currentNode.NodeFeature && currentNode.NodeFeature.FeatureType == featureType)
             {
-                if (currentNode.ControllingSide == TurnManager.Instance.CurrentSide)
+                if (currentNode.ControllingSide == HumanPlayerManager.Instance)
                 {
                     if (currentNode.NodeFeature.Range == -1) return true;
 

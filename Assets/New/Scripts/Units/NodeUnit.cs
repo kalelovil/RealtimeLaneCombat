@@ -62,8 +62,9 @@ public class NodeUnit : MonoBehaviour, IPointerClickHandler
     }
     #endregion
 
-    internal void Initialise(AbstractPlayerManager side, Node node)
+    internal void Initialise(Node node)
     {
+        AbstractPlayerManager side = HumanPlayerManager.Instance;
         _side = side;
         if (_standardMovement)
         {
@@ -88,6 +89,6 @@ public class NodeUnit : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        InputManager.Instance.UnitClicked(this);
+        PlayerInputManager.Instance.UnitClicked(this);
     }
 }

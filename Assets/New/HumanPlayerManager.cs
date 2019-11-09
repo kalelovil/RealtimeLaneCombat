@@ -7,6 +7,8 @@ public class HumanPlayerManager : AbstractPlayerManager
     // TODO Reconfigue for multiplayer, always point to local player
     public static HumanPlayerManager Instance;
 
+    [SerializeField] bool _isLocal;
+
     public override LeftOrRight MapSide
     {
         get { return LeftOrRight.Left; }
@@ -28,7 +30,7 @@ public class HumanPlayerManager : AbstractPlayerManager
 
     private void Awake()
     {
-        Instance = this;
+        if (_isLocal) Instance = this;
     }
 
     // Update is called once per frame

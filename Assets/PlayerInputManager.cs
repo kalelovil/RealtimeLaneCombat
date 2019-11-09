@@ -28,8 +28,11 @@ public class PlayerInputManager : MonoBehaviour
 
         if (!CardBase.Selected_Card || !CardBase.Selected_Card.CanBePlayedOn(nodeUnit._standardMovement.CurrentNode))
         {
-            CardBase.Selected_Card = null;
-            SelectedUnit = nodeUnit;
+            if (nodeUnit.Side == HumanPlayerManager.Instance)
+            {
+                CardBase.Selected_Card = null;
+                SelectedUnit = nodeUnit;
+            }
         }
         else if (nodeUnit._standardMovement)
         {

@@ -15,5 +15,6 @@ namespace kalelovil.utility.pathfinding
         IEnumerable<IPathfindingNode> GetConnectedNodes();
 
         NodeConnection GetConnectionToNode(IPathfindingNode node);
+        bool BlocksUnit(NodeUnit unit);
     }
 }

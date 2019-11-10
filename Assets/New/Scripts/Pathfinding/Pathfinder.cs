@@ -33,8 +33,8 @@ namespace kalelovil.utility.pathfinding
             Air
         }
 
-        public static Path GetPathOfType(IPathfindingNode startNode, IPathfindingNode endNode,
-            PathfindingType pathfindingType, float? movementPoints = null)
+        public static Path GetPathOfTypeForUnit(IPathfindingNode startNode, IPathfindingNode endNode,
+            PathfindingType pathfindingType, NodeUnit unit)
         {
             IPathfindingNode[] neighbourNodes = null;
             IPathfindingNode neighbourNode;
@@ -68,7 +68,7 @@ namespace kalelovil.utility.pathfinding
                 {
                     neighbourNode = neighbourNodes[i];
                     if (neighbourNode != null && neighbourNode != startNode &&
-                        (neighbourNode.IsEmpty || pathfindingType == PathfindingType.Air))
+                        (!neighbourNode.BlocksUnit(unit) || pathfindingType == PathfindingType.Air))
                     {
                         stepCost = currentNode.GetConnectionToNode(neighbourNode)._movementPointCost;
                         bool hasFoundCost = costSoFarArray.TryGetValue(neighbourNode, out currentLowestCost);

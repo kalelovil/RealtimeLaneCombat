@@ -26,13 +26,11 @@ public class PlayerInputManager : MonoBehaviour
     {
         Debug.Log($"Unit Clicked: {nodeUnit}");
 
-        if (!CardBase.Selected_Card || !CardBase.Selected_Card.CanBePlayedOn(nodeUnit._standardMovement.CurrentNode))
+        if ((!CardBase.Selected_Card || !CardBase.Selected_Card.CanBePlayedOn(nodeUnit._standardMovement.CurrentNode))
+            && nodeUnit.Side == HumanPlayerManager.Instance)
         {
-            if (nodeUnit.Side == HumanPlayerManager.Instance)
-            {
-                CardBase.Selected_Card = null;
-                SelectedUnit = nodeUnit;
-            }
+            CardBase.Selected_Card = null;
+            SelectedUnit = nodeUnit;
         }
         else if (nodeUnit._standardMovement)
         {

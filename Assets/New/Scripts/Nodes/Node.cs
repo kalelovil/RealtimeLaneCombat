@@ -16,6 +16,10 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
     #region PathfindingNode Interface
     public int NumOfActions { get { return 1; } }
     public bool IsEmpty { get { return !_currentUnit; } }
+    public bool BlocksUnit(NodeUnit unit)
+    {
+        return CurrentUnit && CurrentUnit.Side == unit.Side;
+    }
     public Vector3 PositionForHeuristic { get { return transform.position; } }
 
     public IEnumerable<IPathfindingNode> GetConnectedNodes()
@@ -101,12 +105,15 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
         // TODO Refactor
         if (unitMovement)
         {
-            var pathToNode = Pathfinder.GetPathOfType
+            // TODO Refactor expensive GetComponent call
+            NodeUnit unit = unitMovement.GetComponent<NodeUnit>();
+            //
+            var pathToNode = Pathfinder.GetPathOfTypeForUnit
             (
                 unitMovement.CurrentNode, 
                 this, 
                 Pathfinder.PathfindingType.Ground, 
-                unitMovement.CurrentMovementSpeed
+                unit
             ); 
             _nodeVisuals.SetMovableToVisualState(pathToNode != null);
         }

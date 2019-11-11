@@ -53,8 +53,6 @@ public class NodeUnit : MonoBehaviour, IPointerClickHandler
     [SerializeField] bool _highlighted;
     public bool Highlighted { get { return _highlighted; } internal set { SetHighlighted(value); } }
 
-    public Coroutine TaskInProgress { get; internal set; }
-
     private void SetHighlighted(bool value)
     {
         _highlighted = value;

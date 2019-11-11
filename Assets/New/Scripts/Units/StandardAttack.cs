@@ -57,7 +57,21 @@ public class StandardAttack : MonoBehaviour
         return false;
     }
 
-    internal IEnumerator AttackCoroutine(StandardHealth otherUnitHealth, AttackType attackType)
+    [SerializeField] private StandardHealth _currentTarget;
+    internal StandardHealth CurrentTarget { get { return _currentTarget; } set { SetCurrentTarget(value); } }
+    private void SetCurrentTarget(StandardHealth value)
+    {
+        _currentTarget = value;
+        StandardAttack defender = value.GetComponent<StandardAttack>();
+        if (defender && !defender.CurrentTarget)
+        {
+            StandardHealth attackerHealth = GetComponent<StandardHealth>();
+            defender.CurrentTarget = attackerHealth;
+        }
+        //StartCoroutine
+    }
+
+    private IEnumerator AttackAnimationCoroutine(StandardHealth otherUnitHealth, AttackType attackType)
     {
         Debug.Log($"{name} Attacked {otherUnitHealth.name} for {_attackPoints} Damage.");
 

@@ -8,6 +8,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(NodeUnit))]
 public class StandardMovement : MonoBehaviour
 {
+    StandardAttack _attack;
+
     [SerializeField] float _baseMovementSpeed;
     public float BaseMovementSpeed { get { return _baseMovementSpeed; } }
     [SerializeField] private float _currentMovementSpeed;
@@ -20,7 +22,7 @@ public class StandardMovement : MonoBehaviour
 
     [SerializeField] Node _currentNode;
     public Node CurrentNode { get { return _currentNode; } set { SetCurrentNode(value); } }
-    public static Action<StandardMovement, Node> UnitNodeSetAction;
+    public static Action<StandardMovement, Node> NodeReachedAction;
     private void SetCurrentNode(Node value)
     {
         var oldNode = CurrentNode;
@@ -29,7 +31,7 @@ public class StandardMovement : MonoBehaviour
         _currentNode = value;
         transform.position = _currentNode.transform.position;
         CurrentNode.CurrentUnit = GetComponent<NodeUnit>();
-        UnitNodeSetAction.Invoke(this, CurrentNode);
+        NodeReachedAction.Invoke(this, CurrentNode);
 
         if (oldNode && oldNode != CurrentNode)
         {
@@ -38,13 +40,21 @@ public class StandardMovement : MonoBehaviour
         }
     }
 
-    [SerializeField] NodeConnection _currentPath;
-    public NodeConnection CurrentConnection { get { return _currentPath; } set { SetCurrentPath(value); } }
-    private void SetCurrentPath(NodeConnection value)
+    [SerializeField] NodeConnection _currentConnection;
+    public NodeConnection CurrentConnection { get { return _currentConnection; } set { SetCurrentConnection(value); } }
+    private void SetCurrentConnection(NodeConnection value)
     {
         if (CurrentConnection) CurrentConnection._nodePathVisuals.Highlighted = false;
-        _currentPath = value;
+        _currentConnection = value;
         if (CurrentConnection) CurrentConnection._nodePathVisuals.Highlighted = true;
+    }
+
+
+    [SerializeField] Node _targetNode;
+    public Node TargetNode { get { return _targetNode; } set { SetTargetNode(value); } }
+    private void SetTargetNode(Node value)
+    {
+        _targetNode = value;
     }
 
     internal Dictionary<MapTerrain.MapTerrainType, CanTraverseTerrain> _canTraverseTerrainMap = new Dictionary<MapTerrain.MapTerrainType, CanTraverseTerrain>();
@@ -68,6 +78,11 @@ public class StandardMovement : MonoBehaviour
         //DateManager.CurrentDayChangedAction -= CurrentTurnChanged;
     }
 
+    private void Awake()
+    {
+        _attack = GetComponent<StandardAttack>();
+    }
+
     internal void Initialise(AbstractPlayerManager side, Node node)
     {
         _image.color = side.Colour;
@@ -78,17 +93,14 @@ public class StandardMovement : MonoBehaviour
         CurrentNode.CurrentUnit = null;
     }
 
-    internal void Move()
+    internal void MoveToNextNode()
     {
         if (_path._pathNodeStack.Count > 0)
         {
             var nextNode = (Node)_path.Peek();
-            // TODO Refactor this to avoid GetComponent
-            var unit = GetComponent<NodeUnit>();
-            //
-            if (nextNode.CurrentUnit && unit._standardAttack)
+            if (nextNode.CurrentUnit && nextNode.CurrentUnit._standardHealth && _attack)
             {
-                PlayerInputManager.Instance.StartCoroutine(PlayerInputManager.Instance.UnitNodeActionCoroutine(nextNode));
+                _attack.CurrentTarget = nextNode.CurrentUnit._standardHealth;
             }
             else
             {
@@ -140,7 +152,7 @@ public class StandardMovement : MonoBehaviour
         {
             if (!CurrentConnection)
             {
-                Move();
+                MoveToNextNode();
             }
             yield return null;
         }

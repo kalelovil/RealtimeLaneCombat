@@ -66,20 +66,30 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    internal void NodeClicked(Node node)
+    internal void NodeClicked(Node clickedNode)
     {
-        Debug.Log($"Node Clicked: {node}");
-        if (SelectedUnit && SelectedUnit.TaskInProgress == null)
+        Debug.Log($"Node Clicked: {clickedNode}");
+        if (SelectedUnit)
         {
-            SelectedUnit.TaskInProgress = StartCoroutine(UnitNodeActionCoroutine(node));
+            var path = Pathfinder.GetPathOfTypeForUnit
+            (
+                SelectedUnit._standardMovement.CurrentNode,
+                clickedNode, Pathfinder.PathfindingType.Ground,
+                SelectedUnit
+            );
+            if (path != null)
+            {
+                SelectedUnit._standardMovement.SetPath(path);
+            }
         }
-        else if (SelectedCard && SelectedCard.CanBePlayed() && SelectedCard.CanBePlayedOn(node))
+        else if (SelectedCard && SelectedCard.CanBePlayed() && SelectedCard.CanBePlayedOn(clickedNode))
         {
-            SelectedCard.Play(node);
+            SelectedCard.Play(clickedNode);
             CardBase.Selected_Card = null;
         }
     }
 
+    /*
     internal IEnumerator UnitNodeActionCoroutine(Node targetNode)
     {
         if (
@@ -113,7 +123,6 @@ public class PlayerInputManager : MonoBehaviour
                 SelectedUnit._standardMovement.SetPath(path);
             }
         }
-
-        SelectedUnit.TaskInProgress = null;
     }
+    */
 }

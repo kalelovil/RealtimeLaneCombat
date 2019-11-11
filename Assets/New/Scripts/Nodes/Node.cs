@@ -70,14 +70,14 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
     {
         CardBase.CardSelectedAction += CardSelected;
         AbstractPlayerManager.UnitSelectedAction += UnitSelected;
-        StandardMovement.UnitNodeSetAction += MovableUnitNodeSet;
+        StandardMovement.NodeReachedAction += MovableUnitNodeSet;
     }
 
     public void OnDisable()
     {
         CardBase.CardSelectedAction -= CardSelected;
         AbstractPlayerManager.UnitSelectedAction -= UnitSelected;
-        StandardMovement.UnitNodeSetAction -= MovableUnitNodeSet;
+        StandardMovement.NodeReachedAction -= MovableUnitNodeSet;
     }
 
 

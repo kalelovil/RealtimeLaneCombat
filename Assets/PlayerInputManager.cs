@@ -80,7 +80,7 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private IEnumerator UnitNodeActionCoroutine(Node targetNode)
+    internal IEnumerator UnitNodeActionCoroutine(Node targetNode)
     {
         if (
             targetNode.CurrentUnit

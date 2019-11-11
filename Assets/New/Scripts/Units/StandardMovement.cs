@@ -82,14 +82,24 @@ public class StandardMovement : MonoBehaviour
     {
         if (_path._pathNodeStack.Count > 0)
         {
-            var nextNode = _path.Pop();
+            var nextNode = (Node)_path.Peek();
+            // TODO Refactor this to avoid GetComponent
+            var unit = GetComponent<NodeUnit>();
+            //
+            if (nextNode.CurrentUnit && unit._standardAttack)
+            {
+                PlayerInputManager.Instance.StartCoroutine(PlayerInputManager.Instance.UnitNodeActionCoroutine(nextNode));
+            }
+            else
+            {
+                nextNode = (Node)_path.Pop();
+                var nextConnection = nextNode.GetConnectionToNode(CurrentNode);
+                float pathSpeedFactor = GetPathSpeedFactor(nextConnection);
+                CurrentMovementSpeed = BaseMovementSpeed * pathSpeedFactor;
 
-            var nextConnection = nextNode.GetConnectionToNode(CurrentNode);
-            float pathSpeedFactor = GetPathSpeedFactor(nextConnection);
-            CurrentMovementSpeed = BaseMovementSpeed * pathSpeedFactor;
-
-            CurrentNode = (Node)nextNode;
-            CurrentConnection = nextConnection;
+                CurrentNode = (Node)nextNode;
+                CurrentConnection = nextConnection;
+            }
         }
     }
 

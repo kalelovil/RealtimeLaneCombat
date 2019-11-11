@@ -75,7 +75,7 @@ namespace kalelovil.utility.pathfinding
                         var costSoFar = costSoFarArray[currentNode];
                         newCost = costSoFar + stepCost;
 
-                        if ((!movementPoints.HasValue || newCost <= movementPoints) && (currentLowestCost <= 0 || newCost < currentLowestCost))
+                        if (currentLowestCost <= 0 || newCost < currentLowestCost)
                         {
                             costSoFarArray[neighbourNode] = newCost;
                             //if (pathfindingType == PathfindingType.Tile)

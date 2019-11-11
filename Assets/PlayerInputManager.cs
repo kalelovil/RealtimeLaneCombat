@@ -80,38 +80,33 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private IEnumerator UnitNodeActionCoroutine(Node node)
+    private IEnumerator UnitNodeActionCoroutine(Node targetNode)
     {
-        if (node.CurrentUnit)
-        {
-            if (SelectedUnit._standardAttack && SelectedUnit._standardAttack.CanInitiateAttack
-                && node.CurrentUnit.Side != SelectedUnit.Side)
+        if (
+            targetNode.CurrentUnit
+            && SelectedUnit._standardAttack 
+            && SelectedUnit._standardAttack.CanInitiateAttack
+            && targetNode.CurrentUnit._standardHealth
+            && targetNode.CurrentUnit.Side != SelectedUnit.Side
+            && SelectedUnit._standardAttack.NodeInRange(targetNode)
+        ) {
+            yield return SelectedUnit.StartCoroutine(SelectedUnit._standardAttack.AttackCoroutine(targetNode.CurrentUnit._standardHealth, StandardAttack.AttackType.Instigation));
+            if (targetNode.CurrentUnit._standardHealth.CurrentHealthPoints > 0)
             {
-                if (SelectedUnit._standardAttack.NodeInRange(node))
+                if (SelectedUnit._standardAttack.TriggersRetaliation && targetNode.CurrentUnit._standardAttack.NodeInRange(SelectedUnit._standardMovement.CurrentNode))
                 {
-                    var target = node.CurrentUnit._standardHealth;
-                    if (target && SelectedUnit)
-                    {
-                        yield return SelectedUnit.StartCoroutine(SelectedUnit._standardAttack.AttackCoroutine(target, StandardAttack.AttackType.Instigation));
-                        if (target.CurrentHealthPoints > 0)
-                        {
-                            if (SelectedUnit._standardAttack.TriggersRetaliation && node.CurrentUnit._standardAttack.NodeInRange(SelectedUnit._standardMovement.CurrentNode))
-                            {
-                                yield return node.CurrentUnit.StartCoroutine(node.CurrentUnit._standardAttack.AttackCoroutine(SelectedUnit._standardHealth, StandardAttack.AttackType.Retaliation));
-                            }
-                        }
-                    }
+                    yield return targetNode.CurrentUnit.StartCoroutine(targetNode.CurrentUnit._standardAttack.AttackCoroutine(SelectedUnit._standardHealth, StandardAttack.AttackType.Retaliation));
                 }
             }
         }
         else if (SelectedUnit._standardMovement && !SelectedUnit._standardMovement.CurrentConnection)
         {
             //var path = SelectedUnit._standardMovement.GetPathToNode(node);
-            var path = Pathfinder.GetPathOfType
+            var path = Pathfinder.GetPathOfTypeForUnit
             (
                 SelectedUnit._standardMovement.CurrentNode, 
-                node, Pathfinder.PathfindingType.Ground, 
-                SelectedUnit._standardMovement.CurrentMovementSpeed
+                targetNode, Pathfinder.PathfindingType.Ground, 
+                SelectedUnit
             );
             if (path != null)
             {

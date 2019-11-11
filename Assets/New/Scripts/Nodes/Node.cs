@@ -18,7 +18,7 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
     public bool IsEmpty { get { return !_currentUnit; } }
     public bool BlocksUnit(NodeUnit unit)
     {
-        return CurrentUnit && CurrentUnit.Side == unit.Side;
+        return unit && CurrentUnit && CurrentUnit.Side == unit.Side;
     }
     public Vector3 PositionForHeuristic { get { return transform.position; } }
 

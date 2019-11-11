@@ -42,7 +42,7 @@ public class MapManager : MonoBehaviour
     internal int? GetDistanceBetweenNodes(Node startNode, Node endNode, Pathfinder.PathfindingType pathfindingType)
     {
         // TODO Temp
-        Path path = Pathfinder.GetPathOfType(startNode, endNode, pathfindingType);
+        Path path = Pathfinder.GetPathOfTypeForUnit(startNode, endNode, pathfindingType, null);
         //
         return path?._pathNodeStack.Count;
     }

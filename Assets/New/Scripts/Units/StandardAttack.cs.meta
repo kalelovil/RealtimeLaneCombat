@@ -3,7 +3,12 @@ guid: 7b79574d89e883b4ea4922a8451fe090
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _combatParticleSystem: {instanceID: 0}
+  - _battlePrefab: {fileID: 6536168449130076028, guid: 10f4fe5ecf39bd242b888ae12bd843ba,
+      type: 3}
+  - _currentBattle: {instanceID: 0}
+  - _currentTarget: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

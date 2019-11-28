@@ -17,6 +17,11 @@ public class StandardAttack : MonoBehaviour
         Retaliation = 2,
     }
 
+    internal void DoDamage(NodeUnit defender)
+    {
+        defender._standardHealth.TakeDamage(_attackPoints);
+    }
+
     internal List<AttackUpgradeCardAbility> _upgradeList = new List<AttackUpgradeCardAbility>();
     internal void AddUpgrade(AttackUpgradeCardAbility upgradeCardAbility)
     {
@@ -57,18 +62,17 @@ public class StandardAttack : MonoBehaviour
         return false;
     }
 
-    [SerializeField] private StandardHealth _currentTarget;
-    internal StandardHealth CurrentTarget { get { return _currentTarget; } set { SetCurrentTarget(value); } }
-    private void SetCurrentTarget(StandardHealth value)
+    private void StartBattleAgainst(StandardHealth value)
     {
-        _currentTarget = value;
-        StandardAttack defender = value.GetComponent<StandardAttack>();
-        if (defender && !defender.CurrentTarget)
+        if (value)
         {
-            StandardHealth attackerHealth = GetComponent<StandardHealth>();
-            defender.CurrentTarget = attackerHealth;
+            // TODO Refactor to avoid GetComponent
+            var attacker = GetComponent<NodeUnit>();
+            var defender = value.GetComponent<NodeUnit>();
+            //
+            _currentBattle = Instantiate(_battlePrefab);
+            _currentBattle.Initialise(attacker, defender);
         }
-        //StartCoroutine
     }
 
     private IEnumerator AttackAnimationCoroutine(StandardHealth otherUnitHealth, AttackType attackType)

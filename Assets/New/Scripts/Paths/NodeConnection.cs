@@ -8,6 +8,9 @@ using TMPro;
 [ExecuteAlways]
 public class NodeConnection : MonoBehaviour
 {
+    [SerializeField] private Battle _battlePrefab;
+    [SerializeField] private Battle _battle;
+
     [SerializeField] LineRenderer _lineRenderer;
     [SerializeField] internal Node _node1, _node2;
 
@@ -42,6 +45,12 @@ public class NodeConnection : MonoBehaviour
 
     [SerializeField] float _textYOffset;
 #endif
+
+    public void Start()
+    {
+        _battle = Instantiate(_battlePrefab);
+        _battle.gameObject.SetActive(true);
+    }
 
     public void Update()
     {

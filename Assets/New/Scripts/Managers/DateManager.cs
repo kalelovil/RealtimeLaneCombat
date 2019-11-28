@@ -9,10 +9,10 @@ public class DateManager : MonoBehaviour
 
     #region Hour Number
     [Header("Hour")]
-    [Range(1, 1000)]
     [SerializeField] int _currentHourNum;
     public int CurrentHourNum { get { return _currentHourNum; } }
 
+    internal static Action<int> CurrentHourChangedAction;
     internal static Action<int> CurrentDayChangedAction;
     #endregion
 
@@ -28,5 +28,11 @@ public class DateManager : MonoBehaviour
     private void Start()
     {
         CurrentDayChangedAction?.Invoke(1);
+    }
+
+    private void FixedUpdate()
+    {
+        _currentHourNum++;
+        CurrentHourChangedAction?.Invoke(_currentHourNum);
     }
 }

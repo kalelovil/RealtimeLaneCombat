@@ -98,14 +98,14 @@ public class StandardMovement : MonoBehaviour
         if (_path._pathNodeStack.Count > 0)
         {
             var nextNode = (Node)_path.Peek();
+            var nextConnection = nextNode.GetConnectionToNode(CurrentNode);
             if (nextNode.CurrentUnit && nextNode.CurrentUnit._standardHealth && _attack)
             {
-                _attack.CurrentTarget = nextNode.CurrentUnit._standardHealth;
+                nextConnection.Battle.Attacker = GetComponent<NodeUnit>();
             }
             else
             {
                 nextNode = (Node)_path.Pop();
-                var nextConnection = nextNode.GetConnectionToNode(CurrentNode);
                 float pathSpeedFactor = GetPathSpeedFactor(nextConnection);
                 CurrentMovementSpeed = BaseMovementSpeed * pathSpeedFactor;
 

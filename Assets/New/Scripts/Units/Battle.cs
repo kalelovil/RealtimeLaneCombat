@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-internal class Battle : MonoBehaviour
+public class Battle : MonoBehaviour
 {
-    #region Attacker;
+    #region Attacker
     [SerializeField] NodeUnit _attacker;
     internal NodeUnit Attacker { get { return _attacker; } set { SetAttacker(value); } }
     void SetAttacker(NodeUnit value)
@@ -14,7 +15,7 @@ internal class Battle : MonoBehaviour
     }
     #endregion
 
-    #region Defender;
+    #region Defender
     [SerializeField] NodeUnit _defender;
     internal NodeUnit Defender { get { return _defender; } set { SetDefender(value); } }
     void SetDefender(NodeUnit value)
@@ -22,6 +23,18 @@ internal class Battle : MonoBehaviour
         _defender = value;
         ParticipantsChanged();
     }
+    #endregion
+
+    #region Progress
+    [Range(0, 100)]
+    [SerializeField] float _progress;
+    internal float Progress => _progress;
+    #endregion
+
+    #region Visual
+    [Header("Visual")]
+    [SerializeField] 
+    TextMeshProUGUI _percentageValueText;
     #endregion
 
     private void ParticipantsChanged()
@@ -47,18 +60,12 @@ internal class Battle : MonoBehaviour
         DateManager.CurrentHourChangedAction -= HourStep;
     }
 
-    private void Initialise()
-    {
-        _attackerUnit = attacker;
-        _defenderUnit = defender;
-    }
-
     private void HourStep(int hourNum)
     {
-        _attackerUnit._standardAttack.DoDamage(_defenderUnit);
-        if (_defenderUnit != null)
+        Attacker._standardAttack.DoDamage(Defender);
+        if (Defender != null)
         {
-            _defenderUnit._standardAttack.DoDamage(_attackerUnit);
+            Defender._standardAttack.DoDamage(Attacker);
         }
     }
 }

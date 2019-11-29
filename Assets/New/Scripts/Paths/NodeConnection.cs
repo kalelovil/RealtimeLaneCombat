@@ -10,6 +10,7 @@ public class NodeConnection : MonoBehaviour
 {
     [SerializeField] private Battle _battlePrefab;
     [SerializeField] private Battle _battle;
+    public Battle Battle => _battle;
 
     [SerializeField] LineRenderer _lineRenderer;
     [SerializeField] internal Node _node1, _node2;
@@ -48,7 +49,8 @@ public class NodeConnection : MonoBehaviour
 
     public void Start()
     {
-        _battle = Instantiate(_battlePrefab);
+        _battle = Instantiate(_battlePrefab, transform);
+        _battle.transform.position = (_node1.transform.position + _node2.transform.position) / 2f;
         _battle.gameObject.SetActive(true);
     }
 

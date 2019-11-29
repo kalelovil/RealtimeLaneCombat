@@ -62,6 +62,7 @@ public class StandardAttack : MonoBehaviour
         return false;
     }
 
+    /*
     private void StartBattleAgainst(StandardHealth value)
     {
         if (value)
@@ -74,6 +75,7 @@ public class StandardAttack : MonoBehaviour
             _currentBattle.Initialise(attacker, defender);
         }
     }
+    */
 
     private IEnumerator AttackAnimationCoroutine(StandardHealth otherUnitHealth, AttackType attackType)
     {

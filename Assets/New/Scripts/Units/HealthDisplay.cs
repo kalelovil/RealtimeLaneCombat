@@ -24,7 +24,7 @@ internal class HealthDisplay : MonoBehaviour
         _healthPointList.Clear();
 
         // Populate Points
-        for (int i = 1; i <= totalHealth; i++)
+        for (int i = 1; i <= totalHealth/100f; i++)
         {
             var healthPoint = Instantiate(_healthPointPrefab, _healthPointArea);
             _healthPointList.Add(healthPoint);

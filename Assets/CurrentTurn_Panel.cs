@@ -5,20 +5,27 @@ using UnityEngine;
 
 public class CurrentTurn_Panel : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI _text;
+    [Header("Hour")]
+    [SerializeField] TextMeshProUGUI _hourValueText;
 
     private void OnEnable()
     {
-        DateManager.CurrentDayChangedAction += CurrentTurnChanged;
+        DateManager.CurrentHourChangedAction += CurrentHourChanged;
+        DateManager.CurrentDayChangedAction += CurrentDayChanged;
     }
 
     private void OnDisable()
     {
-        DateManager.CurrentDayChangedAction -= CurrentTurnChanged;
+        DateManager.CurrentHourChangedAction -= CurrentHourChanged;
+        DateManager.CurrentDayChangedAction -= CurrentDayChanged;
     }
 
-    private void CurrentTurnChanged(int currentTurn)
+    private void CurrentHourChanged(int currentHour)
     {
-        _text.text = $"{currentTurn}";
+        _hourValueText.text = $"{currentHour}";
+    }
+    private void CurrentDayChanged(int currentDay)
+    {
+        // TODO Implement
     }
 }

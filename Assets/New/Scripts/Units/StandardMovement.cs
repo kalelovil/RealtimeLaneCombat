@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(NodeUnit))]
-public class StandardMovement : MonoBehaviour
+public class StandardMovement : UnitComponent
 {
     StandardAttack _attack;
 
@@ -26,7 +26,17 @@ public class StandardMovement : MonoBehaviour
     private void SetCurrentNode(Node value)
     {
         var oldNode = CurrentNode;
-        if (oldNode) oldNode.CurrentUnit = null;
+        if (oldNode)
+        {
+            // TODO Turn into event
+            oldNode.CurrentUnit = null;
+            // Remove As Defender For All Connected Nodes
+            foreach (var connection in oldNode._nodePaths.Values)
+            {
+                if (connection.Battle.Defender == this) connection.Battle.Defender = null;
+            }
+            //
+        }
 
         _currentNode = value;
         transform.position = _currentNode.transform.position;

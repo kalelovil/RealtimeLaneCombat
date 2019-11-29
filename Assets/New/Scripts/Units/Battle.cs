@@ -10,6 +10,7 @@ public class Battle : MonoBehaviour
     internal NodeUnit Attacker { get { return _attacker; } set { SetAttacker(value); } }
     void SetAttacker(NodeUnit value)
     {
+        Debug.Log($"Battle {this} Set Attacker {value}");
         _attacker = value;
         ParticipantsChanged();
     }
@@ -20,6 +21,7 @@ public class Battle : MonoBehaviour
     internal NodeUnit Defender { get { return _defender; } set { SetDefender(value); } }
     void SetDefender(NodeUnit value)
     {
+        Debug.Log($"Battle {this} Set Defender {value}");
         _defender = value;
         ParticipantsChanged();
     }
@@ -37,15 +39,21 @@ public class Battle : MonoBehaviour
     TextMeshProUGUI _percentageValueText;
     #endregion
 
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
     private void ParticipantsChanged()
     {
         if (Attacker && Defender)
         {
-            if (!enabled) enabled = true;
+            Debug.Log("Attacker And Defender Set");
+            if (!gameObject.activeSelf) gameObject.SetActive(true);
         }
         else
         {
-            if (enabled) enabled = false;
+            if (gameObject.activeSelf) gameObject.SetActive(false);
         }
     }
 

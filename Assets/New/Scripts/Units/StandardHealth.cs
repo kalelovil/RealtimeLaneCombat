@@ -9,8 +9,8 @@ public class StandardHealth : MonoBehaviour
     [SerializeField] int _totalHealthPoints;
     public int TotalHealthPoints { get { return _totalHealthPoints; } }
     [SerializeField] private int _currentHealthPoints;
-    public int CurrentHealthPoints { get { return _currentHealthPoints; } set { SetCurrentNovementPoints(value); } }
-    private void SetCurrentNovementPoints(int value)
+    public int CurrentHealthPoints { get { return _currentHealthPoints; } set { SetCurrentHealthPoints(value); } }
+    private void SetCurrentHealthPoints(int value)
     {
         _currentHealthPoints = Mathf.Max(0, value);
         if (_healthDisplay) _healthDisplay.ValueChanged(CurrentHealthPoints, TotalHealthPoints);

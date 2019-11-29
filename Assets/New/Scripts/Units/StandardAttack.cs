@@ -17,9 +17,9 @@ public class StandardAttack : MonoBehaviour
         Retaliation = 2,
     }
 
-    internal void DoDamage(NodeUnit defender)
+    internal void DoDamage(NodeUnit recipient)
     {
-        defender._standardHealth.TakeDamage(_attackPoints);
+        recipient._standardHealth.TakeDamage(_attackPoints);
     }
 
     internal List<AttackUpgradeCardAbility> _upgradeList = new List<AttackUpgradeCardAbility>();
@@ -92,8 +92,6 @@ public class StandardAttack : MonoBehaviour
         _combatParticleSystem.Play();
         yield return new WaitForSeconds(2f);
         _combatParticleSystem.Stop();
-
-        otherUnitHealth.TakeDamage(_attackPoints);
 
         // TODO Should attack cost equal path cost?
         if (attackType == AttackType.Instigation)

@@ -6,6 +6,7 @@ using UnityEngine;
 using TMPro;
 
 [ExecuteAlways]
+[CanEditMultipleObjects]
 public class NodeConnection : MonoBehaviour
 {
     [SerializeField] private Battle _battlePrefab;
@@ -47,11 +48,14 @@ public class NodeConnection : MonoBehaviour
     [SerializeField] float _textYOffset;
 #endif
 
-    public void Start()
+    public void OnValidate()
     {
-        _battle = Instantiate(_battlePrefab, transform);
-        _battle.transform.position = (_node1.transform.position + _node2.transform.position) / 2f;
-        _battle.gameObject.SetActive(true);
+        if (_battle == null)
+        {
+            _battle = Instantiate(_battlePrefab, transform);
+            _battle.transform.position = (_node1.transform.position + _node2.transform.position) / 2f;
+            _battle.gameObject.SetActive(true);
+        }
     }
 
     public void Update()

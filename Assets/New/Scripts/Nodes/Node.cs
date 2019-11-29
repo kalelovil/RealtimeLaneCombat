@@ -37,6 +37,7 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
 
     [SerializeField] NodeConnection _nodePathPrefab;
 
+    // TODO Rename to NodeConnections
     [SerializeField] public NodeToConnectionMap _nodePaths = new NodeToConnectionMap();
 
 
@@ -102,6 +103,8 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
     }
     private void MovableUnitNodeSet(StandardMovement unitMovement, Node node)
     {
+        if (node != this) return;
+
         // TODO Refactor
         if (unitMovement)
         {
@@ -116,6 +119,14 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
                 unit
             ); 
             _nodeVisuals.SetMovableToVisualState(pathToNode != null);
+
+
+            // Set As Defender For All Connected Nodes
+            foreach (var connection in _nodePaths.Values)
+            {
+                connection.Battle.Defender = unitMovement.NodeUnit;
+            }
+            //
         }
         else
         {

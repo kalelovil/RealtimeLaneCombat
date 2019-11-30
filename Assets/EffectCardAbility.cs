@@ -11,14 +11,14 @@ public class EffectCardAbility : CardAbility
 
     public override void ActivateOn(Node node)
     {
-        var unitTarget = node.CurrentUnit._standardHealth;
+        var unitTarget = node.CurrentUnit.Health;
         unitTarget.TakeDamage(-1 * _healthEffect);
     }
 
     public override bool CanActivateOn(Node node)
     {
         var unitInNode = node.CurrentUnit;
-        var unitHealth = unitInNode?._standardHealth;
+        var unitHealth = unitInNode?.Health;
         var unitSide = unitInNode?.Side;
 
         bool isInRange = NodeInRangeOfFeatureType(node, _requiredNodeFeatureType); 

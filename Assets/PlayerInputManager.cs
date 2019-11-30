@@ -26,15 +26,15 @@ public class PlayerInputManager : MonoBehaviour
     {
         Debug.Log($"Unit Clicked: {nodeUnit}");
 
-        if ((!CardBase.Selected_Card || !CardBase.Selected_Card.CanBePlayedOn(nodeUnit._standardMovement.CurrentNode))
+        if ((!CardBase.Selected_Card || !CardBase.Selected_Card.CanBePlayedOn(nodeUnit.Movement.CurrentNode))
             && nodeUnit.Side == HumanPlayerManager.Instance)
         {
             CardBase.Selected_Card = null;
             SelectedUnit = nodeUnit;
         }
-        else if (nodeUnit._standardMovement)
+        else if (nodeUnit.Movement)
         {
-            NodeClicked(nodeUnit._standardMovement.CurrentNode);
+            NodeClicked(nodeUnit.Movement.CurrentNode);
         }
     }
 
@@ -73,13 +73,13 @@ public class PlayerInputManager : MonoBehaviour
         {
             var path = Pathfinder.GetPathOfTypeForUnit
             (
-                SelectedUnit._standardMovement.CurrentNode,
+                SelectedUnit.Movement.CurrentNode,
                 clickedNode, Pathfinder.PathfindingType.Ground,
                 SelectedUnit
             );
             if (path != null)
             {
-                SelectedUnit._standardMovement.SetPath(path);
+                SelectedUnit.Movement.SetPath(path);
             }
         }
         else if (SelectedCard && SelectedCard.CanBePlayed() && SelectedCard.CanBePlayedOn(clickedNode))

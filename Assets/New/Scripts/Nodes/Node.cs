@@ -98,7 +98,7 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
     }
     private void UnitSelected(NodeUnit unit)
     {
-        var unitMovement = unit?._standardMovement;
+        var unitMovement = unit?.Movement;
         MovableUnitNodeSet(unitMovement, unitMovement?.CurrentNode);
     }
     private void MovableUnitNodeSet(StandardMovement unitMovement, Node node)
@@ -108,9 +108,7 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
         // TODO Refactor
         if (unitMovement)
         {
-            // TODO Refactor expensive GetComponent call
-            NodeUnit unit = unitMovement.GetComponent<NodeUnit>();
-            //
+            NodeUnit unit = unitMovement.NodeUnit;
             var pathToNode = Pathfinder.GetPathOfTypeForUnit
             (
                 unitMovement.CurrentNode, 

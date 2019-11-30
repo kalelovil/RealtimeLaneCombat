@@ -15,10 +15,10 @@ public class NodeUnit : MonoBehaviour, IPointerClickHandler
         switch (upgradeCardAbility.EffectStatType)
         {
             case UpgradeCardAbility.StatType.Health:
-                _standardHealth.AddUpgrade((HealthUpgradeCardAbility)upgradeCardAbility);
+                _health.AddUpgrade((HealthUpgradeCardAbility)upgradeCardAbility);
                 break;
             case UpgradeCardAbility.StatType.Attack:
-                _standardAttack.AddUpgrade((AttackUpgradeCardAbility)upgradeCardAbility);
+                _attack.AddUpgrade((AttackUpgradeCardAbility)upgradeCardAbility);
                 break;
             default:
                 break;
@@ -34,16 +34,19 @@ public class NodeUnit : MonoBehaviour, IPointerClickHandler
     public UnitType _unitType;
 
     [Header("Attack")]
-    [SerializeField] internal StandardAttack _standardAttack;
+    [SerializeField] private StandardAttack _attack;
+    internal StandardAttack Attack => _attack;
     [Space(5)]
 
     [Header("Health")]
-    [SerializeField] internal StandardHealth _standardHealth;
+    [SerializeField] private StandardHealth _health;
+    internal StandardHealth Health => _health;
     [Space(5)]
 
 
     [Header("Movement")]
-    [SerializeField] internal StandardMovement _standardMovement;
+    [SerializeField] private StandardMovement _movement;
+    internal StandardMovement Movement => _movement;
     [Space(5)]
 
     [Header("Visual")]
@@ -64,9 +67,9 @@ public class NodeUnit : MonoBehaviour, IPointerClickHandler
     {
         AbstractPlayerManager side = HumanPlayerManager.Instance;
         _side = side;
-        if (_standardMovement)
+        if (_movement)
         {
-            _standardMovement.Initialise(side, node);
+            _movement.Initialise(side, node);
         }
     }
     private void Start()

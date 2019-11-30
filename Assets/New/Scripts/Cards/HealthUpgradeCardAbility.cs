@@ -10,7 +10,7 @@ public class HealthUpgradeCardAbility : UpgradeCardAbility
     public override bool CanActivateOn(Node node)
     {
         var unitInNode = node.CurrentUnit;
-        var unitHealth = unitInNode?._standardHealth;
+        var unitHealth = unitInNode?.Health;
         var unitSide = unitInNode?.Side;
 
         return unitInNode && unitHealth;

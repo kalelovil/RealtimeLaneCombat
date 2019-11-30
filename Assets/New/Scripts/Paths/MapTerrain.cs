@@ -45,6 +45,6 @@ public class MapTerrain : PathFeature
     }
     public override bool GetIsMoveBlocked(NodeUnit unit)
     {
-        return _unitTypesBlocked[(int)Type-1].Contains(unit._unitType) && !unit._standardMovement._canTraverseTerrainMap.ContainsKey(Type);
+        return _unitTypesBlocked[(int)Type-1].Contains(unit._unitType) && !unit.Movement._canTraverseTerrainMap.ContainsKey(Type);
     }
 }

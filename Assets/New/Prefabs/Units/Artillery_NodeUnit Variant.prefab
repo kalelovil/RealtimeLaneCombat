@@ -36,6 +36,11 @@ PrefabInstance:
       propertyPath: _unitType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8361781304779089158, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: _attack
+      value: 
+      objectReference: {fileID: 6195034856505633078}
     - target: {fileID: 191912970091346769, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -141,16 +146,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1070662668213011648, guid: 9d14d05fa604dcb4a806d2102a792477,
+    - target: {fileID: 9028953918830407676, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
-      propertyPath: _hitPoints
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070662668213011648, guid: 9d14d05fa604dcb4a806d2102a792477,
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b218ad5500727604cafadc455782f679,
         type: 3}
-      propertyPath: _totalHealthPoints
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4792998134944352243, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
       propertyPath: _movementPoints
@@ -181,6 +182,16 @@ PrefabInstance:
       propertyPath: _baseMovementSpeed
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1070662668213011648, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: _hitPoints
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070662668213011648, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: _totalHealthPoints
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 315518641185002112, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
       propertyPath: InitialModule.maxNumParticles
@@ -206,12 +217,6 @@ PrefabInstance:
       propertyPath: VelocityModule.x.scalar
       value: 125
       objectReference: {fileID: 0}
-    - target: {fileID: 9028953918830407676, guid: 9d14d05fa604dcb4a806d2102a792477,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b218ad5500727604cafadc455782f679,
-        type: 3}
     m_RemovedComponents:
     - {fileID: 687857916280436204, guid: 9d14d05fa604dcb4a806d2102a792477, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9d14d05fa604dcb4a806d2102a792477, type: 3}

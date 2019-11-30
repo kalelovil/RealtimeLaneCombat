@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(NodeUnit))]
-public class StandardHealth : MonoBehaviour
+public class StandardHealth : UnitComponent
 {
     [SerializeField] int _totalHealthPoints;
     public int TotalHealthPoints { get { return _totalHealthPoints; } }

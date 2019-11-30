@@ -8,8 +8,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(NodeUnit))]
 public class StandardMovement : UnitComponent
 {
-    StandardAttack _attack;
-
     [SerializeField] float _baseMovementSpeed;
     public float BaseMovementSpeed { get { return _baseMovementSpeed; } }
     [SerializeField] private float _currentMovementSpeed;
@@ -40,7 +38,7 @@ public class StandardMovement : UnitComponent
 
         _currentNode = value;
         transform.position = _currentNode.transform.position;
-        CurrentNode.CurrentUnit = GetComponent<NodeUnit>();
+        CurrentNode.CurrentUnit = NodeUnit;
         NodeReachedAction.Invoke(this, CurrentNode);
 
         if (oldNode && oldNode != CurrentNode)
@@ -88,11 +86,6 @@ public class StandardMovement : UnitComponent
         //DateManager.CurrentDayChangedAction -= CurrentTurnChanged;
     }
 
-    private void Awake()
-    {
-        _attack = GetComponent<StandardAttack>();
-    }
-
     internal void Initialise(AbstractPlayerManager side, Node node)
     {
         _image.color = side.Colour;
@@ -110,7 +103,7 @@ public class StandardMovement : UnitComponent
             var nextNode = (Node)_path.Peek();
             var nextConnection = nextNode.GetConnectionToNode(CurrentNode);
             nextConnection.Battle.Attacker = NodeUnit;
-            if (nextNode.CurrentUnit && nextNode.CurrentUnit._standardHealth && _attack)
+            if (nextNode.CurrentUnit && nextNode.CurrentUnit.Health && NodeUnit.Attack)
             {
                 CurrentConnection = nextConnection;
                 nextConnection.Battle.Defender = nextNode.CurrentUnit;

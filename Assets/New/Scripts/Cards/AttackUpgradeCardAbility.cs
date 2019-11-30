@@ -10,7 +10,7 @@ public class AttackUpgradeCardAbility : UpgradeCardAbility
     public override bool CanActivateOn(Node node)
     {
         var unitInNode = node.CurrentUnit;
-        var unitAttack = unitInNode?._standardAttack;
+        var unitAttack = unitInNode?.Attack;
         var unitSide = unitInNode?.Side;
 
         return unitInNode && unitAttack;

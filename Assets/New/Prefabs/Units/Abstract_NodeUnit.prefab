@@ -254,9 +254,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _side: {fileID: 0}
   _unitType: 0
-  _standardAttack: {fileID: 687857916280436204}
-  _standardHealth: {fileID: 1070662668213011648}
-  _standardMovement: {fileID: 4792998134944352243}
+  _attack: {fileID: 687857916280436204}
+  _health: {fileID: 1070662668213011648}
+  _movement: {fileID: 4792998134944352243}
   _outline: {fileID: 4602807753193101805}
   _highlighted: 0
 --- !u!95 &2589025434741017401
@@ -316,10 +316,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb1e915d78bcff4fafb5f023f7713c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _totalMovementPoints: 0
-  _currentMovementPoints: 0
+  _baseMovementSpeed: 0
+  _currentMovementSpeed: 0
   _currentNode: {fileID: 0}
-  _currentPath: {fileID: 0}
+  _currentConnection: {fileID: 0}
+  _targetNode: {fileID: 0}
   _image: {fileID: 9028953918830407676}
   _animator: {fileID: 2589025434741017401}
   _movementDisplayArea: {fileID: 7046946198691398336}
@@ -5069,6 +5070,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

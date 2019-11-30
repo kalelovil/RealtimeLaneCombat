@@ -5,11 +5,9 @@ using UnityEngine;
 
 [RequireComponent(typeof(NodeUnit))]
 [RequireComponent(typeof(StandardMovement))]
-public class StandardAttack : MonoBehaviour
+public class StandardAttack : UnitComponent
 {
     [SerializeField] int _attackPoints;
-
-    StandardMovement _standardMovement;
 
     internal enum AttackType
     {
@@ -19,7 +17,7 @@ public class StandardAttack : MonoBehaviour
 
     internal void DoDamage(NodeUnit recipient)
     {
-        recipient._standardHealth.TakeDamage(_attackPoints);
+        recipient.Health.TakeDamage(_attackPoints);
     }
 
     internal List<AttackUpgradeCardAbility> _upgradeList = new List<AttackUpgradeCardAbility>();
@@ -42,18 +40,13 @@ public class StandardAttack : MonoBehaviour
     [SerializeField] ParticleSystem _combatParticleSystem;
     #endregion
 
-    private void Awake()
-    {
-        _standardMovement = GetComponent<StandardMovement>();
-    }
-
     internal virtual bool NodeInRange(Node node)
     {
         foreach (var path in node._nodePaths)
         {
-            if (path.Value._node1 == _standardMovement.CurrentNode || path.Value._node2 == _standardMovement.CurrentNode)
+            if (path.Value._node1 == NodeUnit.Movement.CurrentNode || path.Value._node2 == NodeUnit.Movement.CurrentNode)
             {
-                if (_standardMovement.CurrentMovementSpeed >= path.Value._movementPointCost)
+                if (NodeUnit.Movement.CurrentMovementSpeed >= path.Value._movementPointCost)
                 {
                     return true;
                 }
@@ -61,21 +54,6 @@ public class StandardAttack : MonoBehaviour
         }
         return false;
     }
-
-    /*
-    private void StartBattleAgainst(StandardHealth value)
-    {
-        if (value)
-        {
-            // TODO Refactor to avoid GetComponent
-            var attacker = GetComponent<NodeUnit>();
-            var defender = value.GetComponent<NodeUnit>();
-            //
-            _currentBattle = Instantiate(_battlePrefab);
-            _currentBattle.Initialise(attacker, defender);
-        }
-    }
-    */
 
     private IEnumerator AttackAnimationCoroutine(StandardHealth otherUnitHealth, AttackType attackType)
     {
@@ -96,7 +74,7 @@ public class StandardAttack : MonoBehaviour
         // TODO Should attack cost equal path cost?
         if (attackType == AttackType.Instigation)
         {
-            _standardMovement.CurrentMovementSpeed -= 1;
+            NodeUnit.Movement.CurrentMovementSpeed -= 1;
         }
         //
     }

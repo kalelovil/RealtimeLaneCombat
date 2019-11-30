@@ -80,10 +80,10 @@ public class Battle : MonoBehaviour
     {
         if (_canvasGroup.alpha == 1f)
         {
-            Attacker._standardAttack.DoDamage(Defender);
+            Attacker.Attack.DoDamage(Defender);
             if (Defender != null)
             {
-                Defender._standardAttack.DoDamage(Attacker);
+                Defender.Attack.DoDamage(Attacker);
             }
         }
     }

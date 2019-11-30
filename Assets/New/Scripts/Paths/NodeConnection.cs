@@ -9,7 +9,6 @@ using TMPro;
 [CanEditMultipleObjects]
 public class NodeConnection : MonoBehaviour
 {
-    [SerializeField] private Battle _battlePrefab;
     [SerializeField] private Battle _battle;
     public Battle Battle => _battle;
 
@@ -50,12 +49,11 @@ public class NodeConnection : MonoBehaviour
 
     public void OnValidate()
     {
-        if (_battle == null)
-        {
-            _battle = Instantiate(_battlePrefab, transform);
-            _battle.transform.position = (_node1.transform.position + _node2.transform.position) / 2f;
-            _battle.gameObject.SetActive(true);
-        }
+        if (IsInScene(_battle.gameObject)) _battle.transform.position = (_node1.transform.position + _node2.transform.position) / 2f;
+    }
+    bool IsInScene(GameObject gameobject)
+    {
+        return !String.IsNullOrEmpty(gameObject.scene.name);
     }
 
     public void Update()

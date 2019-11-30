@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 3861974535479869681}
   - component: {fileID: 5709325949597661464}
   - component: {fileID: 6536168449130076028}
+  - component: {fileID: 4231637467528682039}
   m_Layer: 5
   m_Name: BattleHolder
   m_TagString: Untagged
@@ -246,7 +247,20 @@ MonoBehaviour:
   _attacker: {fileID: 0}
   _defender: {fileID: 0}
   _progress: 0
+  _canvasGroup: {fileID: 4231637467528682039}
   _percentageValueText: {fileID: 6463139526016206327}
+--- !u!225 &4231637467528682039
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4708041902868291995}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &5725090563488456425
 GameObject:
   m_ObjectHideFlags: 0

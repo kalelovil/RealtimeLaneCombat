@@ -119,14 +119,6 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
                 unit
             ); 
             _nodeVisuals.SetMovableToVisualState(pathToNode != null);
-
-
-            // Set As Defender For All Connected Nodes
-            foreach (var connection in _nodePaths.Values)
-            {
-                connection.Battle.Defender = unitMovement.NodeUnit;
-            }
-            //
         }
         else
         {

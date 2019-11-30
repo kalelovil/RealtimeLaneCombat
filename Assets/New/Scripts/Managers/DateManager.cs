@@ -51,12 +51,26 @@ public class DateManager : MonoBehaviour
     float _currentHourProgress = 0f;
     private void Update()
     {
+        HandleInputs();
+
         _currentHourProgress += Time.deltaTime;
         if (_currentHourProgress >= SPEED_TO_SECONDS_PER_DAY[_speedIndex])
         {
             _currentHourNum++;
             CurrentHourChangedAction?.Invoke(_currentHourNum);
             _currentHourProgress = 0f;
+        }
+    }
+
+    private void HandleInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.Plus))
+        {
+            if (_speedIndex < SPEED_TO_SECONDS_PER_DAY.Count - 1) _speedIndex++;
+        }
+        else if (Input.GetKeyDown(KeyCode.KeypadMinus) || Input.GetKeyDown(KeyCode.Minus))
+        {
+            if (_speedIndex > 0) _speedIndex--;
         }
     }
 }

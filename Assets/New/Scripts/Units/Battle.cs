@@ -36,12 +36,14 @@ public class Battle : MonoBehaviour
     #region Visual
     [Header("Visual")]
     [SerializeField] 
+    CanvasGroup _canvasGroup;
+    [SerializeField] 
     TextMeshProUGUI _percentageValueText;
     #endregion
 
     private void Start()
     {
-        gameObject.SetActive(false);
+
     }
 
     private void ParticipantsChanged()
@@ -49,11 +51,17 @@ public class Battle : MonoBehaviour
         if (Attacker && Defender)
         {
             Debug.Log("Attacker And Defender Set");
-            if (!gameObject.activeSelf) gameObject.SetActive(true);
+            if (_canvasGroup.alpha == 0f)
+            {
+                _canvasGroup.alpha = 1f;
+            }
         }
         else
         {
-            if (gameObject.activeSelf) gameObject.SetActive(false);
+            if (_canvasGroup.alpha == 1f)
+            {
+                _canvasGroup.alpha = 0f;
+            }
         }
     }
 
@@ -70,10 +78,13 @@ public class Battle : MonoBehaviour
 
     private void HourStep(int hourNum)
     {
-        Attacker._standardAttack.DoDamage(Defender);
-        if (Defender != null)
+        if (_canvasGroup.alpha == 1f)
         {
-            Defender._standardAttack.DoDamage(Attacker);
+            Attacker._standardAttack.DoDamage(Defender);
+            if (Defender != null)
+            {
+                Defender._standardAttack.DoDamage(Attacker);
+            }
         }
     }
 }

@@ -109,17 +109,19 @@ public class StandardMovement : UnitComponent
         {
             var nextNode = (Node)_path.Peek();
             var nextConnection = nextNode.GetConnectionToNode(CurrentNode);
+            nextConnection.Battle.Attacker = NodeUnit;
             if (nextNode.CurrentUnit && nextNode.CurrentUnit._standardHealth && _attack)
             {
-                nextConnection.Battle.Attacker = GetComponent<NodeUnit>();
+                CurrentConnection = nextConnection;
+                nextConnection.Battle.Defender = nextNode.CurrentUnit;
             }
             else
             {
-                nextNode = (Node)_path.Pop();
+                nextNode = (Node)_path.Pop();                                                                                                                                                                                                                                                                                                                                                                                                       
                 float pathSpeedFactor = GetPathSpeedFactor(nextConnection);
                 CurrentMovementSpeed = BaseMovementSpeed * pathSpeedFactor;
 
-                CurrentNode = (Node)nextNode;
+                CurrentNode = nextNode;
                 CurrentConnection = nextConnection;
             }
         }

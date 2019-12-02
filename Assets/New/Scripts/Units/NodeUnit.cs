@@ -77,9 +77,10 @@ public class NodeUnit : MonoBehaviour, IPointerClickHandler
         Side._units.Add(this);
     }
 
+    public static Action<NodeUnit> UnitDestroyedAction;
     private void OnDestroy()
     {
-        Side._units.Remove(this);
+        UnitDestroyedAction?.Invoke(this);
     }
 
     // Update is called once per frame

@@ -19,6 +19,10 @@ public class StandardHealth : UnitComponent
     private void SetCurrentHealthPoints(int value)
     {
         _currentHealthPoints = Mathf.Max(0, value);
+        if (_currentHealthPoints == 0)
+        {
+            Destroy(NodeUnit.gameObject);
+        }
         if (_healthBar) _healthBar.UpdateBar(CurrentHealthPoints, TotalHealthPoints);
     }
 

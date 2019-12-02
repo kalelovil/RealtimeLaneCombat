@@ -70,10 +70,32 @@ public class Battle : MonoBehaviour
     private void OnEnable()
     {
         DateManager.CurrentHourChangedAction += HourStep;
+        NodeUnit.UnitDestroyedAction += UnitDestroyed;
     }
+
     private void OnDisable()
     {
         DateManager.CurrentHourChangedAction -= HourStep;
+        NodeUnit.UnitDestroyedAction -= UnitDestroyed;
+    }
+    private void UnitDestroyed(NodeUnit unit)
+    {
+        if (Attacker == unit)
+        {
+            Attacker = null;
+        }
+        else if (Defender == unit)
+        {
+            Defender = null;
+        }
+        else if (_attackerSupport.Contains(unit))
+        {
+            _attackerSupport.Remove(unit);
+        }
+        else if (_defenderSupport.Contains(unit))
+        {
+            _defenderSupport.Remove(unit);
+        }
     }
 
     private void HourStep(int hourNum)

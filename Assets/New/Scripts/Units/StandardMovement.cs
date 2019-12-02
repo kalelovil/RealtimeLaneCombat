@@ -41,28 +41,39 @@ public class StandardMovement : UnitComponent
         CurrentNode.CurrentUnit = NodeUnit;
         NodeReachedAction.Invoke(this, CurrentNode);
 
-        if (oldNode && oldNode != CurrentNode)
-        {
-            _image.transform.position = oldNode.transform.position;
-            StartCoroutine(ImageCatchUp());
-        }
+        CurrentConnection = null;
     }
 
     [SerializeField] NodeConnection _currentConnection;
-    public NodeConnection CurrentConnection { get { return _currentConnection; } set { SetCurrentConnection(value); } }
+    public NodeConnection CurrentConnection { get { return _currentConnection; } private set { SetCurrentConnection(value); } }
     private void SetCurrentConnection(NodeConnection value)
     {
         if (CurrentConnection) CurrentConnection._nodePathVisuals.Highlighted = false;
         _currentConnection = value;
+        if (CurrentConnection)
+        {
+            StartCoroutine(MoveAlongConnection());
+        }
         if (CurrentConnection) CurrentConnection._nodePathVisuals.Highlighted = true;
     }
 
 
-    [SerializeField] Node _targetNode;
-    public Node TargetNode { get { return _targetNode; } set { SetTargetNode(value); } }
-    private void SetTargetNode(Node value)
+    [SerializeField] Node _nextNode;
+    public Node NextNode { get { return _nextNode; } set { SetNextNode(value); } }
+    private void SetNextNode(Node value)
     {
-        _targetNode = value;
+        _nextNode = value;
+
+        CurrentConnection = NextNode.GetConnectionToNode(CurrentNode);
+        CurrentConnection.Battle.Attacker = NodeUnit;
+
+        float pathSpeedFactor = GetPathSpeedFactor(CurrentConnection);
+        CurrentMovementSpeed = BaseMovementSpeed * pathSpeedFactor;
+
+        if (NextNode.CurrentUnit && NextNode.CurrentUnit.Health && NodeUnit.Attack)
+        {
+            CurrentConnection.Battle.Defender = NextNode.CurrentUnit;
+        }
     }
 
     internal Dictionary<MapTerrain.MapTerrainType, CanTraverseTerrain> _canTraverseTerrainMap = new Dictionary<MapTerrain.MapTerrainType, CanTraverseTerrain>();
@@ -96,51 +107,27 @@ public class StandardMovement : UnitComponent
         CurrentNode.CurrentUnit = null;
     }
 
-    internal void MoveToNextNode()
-    {
-        if (_path._pathNodeStack.Count > 0)
-        {
-            var nextNode = (Node)_path.Peek();
-            var nextConnection = nextNode.GetConnectionToNode(CurrentNode);
-            nextConnection.Battle.Attacker = NodeUnit;
-            if (nextNode.CurrentUnit && nextNode.CurrentUnit.Health && NodeUnit.Attack)
-            {
-                CurrentConnection = nextConnection;
-                nextConnection.Battle.Defender = nextNode.CurrentUnit;
-            }
-            else
-            {
-                nextNode = (Node)_path.Pop();                                                                                                                                                                                                                                                                                                                                                                                                       
-                float pathSpeedFactor = GetPathSpeedFactor(nextConnection);
-                CurrentMovementSpeed = BaseMovementSpeed * pathSpeedFactor;
-
-                CurrentNode = nextNode;
-                CurrentConnection = nextConnection;
-            }
-        }
-    }
-
     private float GetPathSpeedFactor(NodeConnection nextNodePath)
     {
         // TODO Temporary
         return 1f / nextNodePath._movementPointCost;
     }
 
-    private IEnumerator ImageCatchUp()
+    private IEnumerator MoveAlongConnection()
     {
-        float delta = Vector2.Distance(_image.transform.position, transform.position);
-        Vector2 startPos = _image.transform.position, endPos = transform.position;
+        Vector2 startPos = CurrentNode.transform.position;
+        Vector2 endPos = NextNode.transform.position;
         float currentTime = 0f, moveTime = 10f / CurrentMovementSpeed;
         while (currentTime < moveTime)
         {
             float timeFraction = currentTime / moveTime;
             //Debug.Log($"Time Fraction: {timeFration}");
-            _image.transform.position = Vector2.Lerp(startPos, endPos, timeFraction);
+            transform.position = Vector2.Lerp(startPos, endPos, timeFraction);
             yield return null;
             currentTime += Time.deltaTime;
         }
-        _image.transform.position = transform.position;
-        CurrentConnection = null;
+        CurrentNode = NextNode;
+        NextNode = null;
         CurrentMovementSpeed = BaseMovementSpeed;
     }
 
@@ -157,7 +144,7 @@ public class StandardMovement : UnitComponent
         {
             if (!CurrentConnection)
             {
-                MoveToNextNode();
+                NextNode = (Node)_path.Pop();
             }
             yield return null;
         }

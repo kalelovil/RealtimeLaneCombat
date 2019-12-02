@@ -120,11 +120,14 @@ public class StandardMovement : UnitComponent
         float currentTime = 0f, moveTime = 10f / CurrentMovementSpeed;
         while (currentTime < moveTime)
         {
-            float timeFraction = currentTime / moveTime;
-            //Debug.Log($"Time Fraction: {timeFration}");
-            transform.position = Vector2.Lerp(startPos, endPos, timeFraction);
+            if (!CurrentConnection.Battle.Defender)
+            {
+                float timeFraction = currentTime / moveTime;
+                //Debug.Log($"Time Fraction: {timeFration}");
+                transform.position = Vector2.Lerp(startPos, endPos, timeFraction);
+                currentTime += Time.deltaTime;
+            }
             yield return null;
-            currentTime += Time.deltaTime;
         }
         CurrentNode = NextNode;
         NextNode = null;

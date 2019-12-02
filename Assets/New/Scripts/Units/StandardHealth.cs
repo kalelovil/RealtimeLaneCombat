@@ -7,13 +7,19 @@ using UnityEngine;
 public class StandardHealth : UnitComponent
 {
     [SerializeField] int _totalHealthPoints;
-    public int TotalHealthPoints { get { return _totalHealthPoints; } }
+    public int TotalHealthPoints { get { return _totalHealthPoints; } set { SetTotalHealthPoints(value); } }
+    private void SetTotalHealthPoints(int value)
+    {
+        _totalHealthPoints = Mathf.Max(0, value);
+        if (_healthBar) _healthBar.UpdateBar(CurrentHealthPoints, TotalHealthPoints);
+    }
+
     [SerializeField] private int _currentHealthPoints;
     public int CurrentHealthPoints { get { return _currentHealthPoints; } set { SetCurrentHealthPoints(value); } }
     private void SetCurrentHealthPoints(int value)
     {
         _currentHealthPoints = Mathf.Max(0, value);
-        if (_healthDisplay) _healthDisplay.ValueChanged(CurrentHealthPoints, TotalHealthPoints);
+        if (_healthBar) _healthBar.UpdateBar(CurrentHealthPoints, TotalHealthPoints);
     }
 
     internal List<HealthUpgradeCardAbility> _upgradeList = new List<HealthUpgradeCardAbility>();
@@ -25,10 +31,8 @@ public class StandardHealth : UnitComponent
     }
 
     #region Visual
-    [Header("Visual")]
-    [SerializeField] Transform _healthDisplayArea;
-    [SerializeField] HealthDisplay _healthDisplayPrefab;
-    [SerializeField] HealthDisplay _healthDisplay;
+    [Header("Visual")] 
+    [SerializeField] SimpleHealthBar _healthBar;
     #endregion
 
     internal void TakeDamage(int attackPoints)
@@ -42,10 +46,7 @@ public class StandardHealth : UnitComponent
 
     private void Start()
     {
-        if (!_healthDisplay)
-        {
-            _healthDisplay = Instantiate(_healthDisplayPrefab, _healthDisplayArea);
-        }
+        TotalHealthPoints = _totalHealthPoints;
         CurrentHealthPoints = TotalHealthPoints;
     }
 }

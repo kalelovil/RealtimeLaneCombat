@@ -106,7 +106,37 @@ public class Battle : MonoBehaviour
             if (Defender != null)
             {
                 Defender.Attack.DoDamage(Attacker);
+                UpdatePercentage();
             }
         }
+    }
+
+    private void UpdatePercentage()
+    {
+        float attackerStrength = CalculateAttackerStrength();
+        float defenderStrength = CalculateDefenderStrength();
+
+        float attackerFraction = attackerStrength / defenderStrength;
+        float defenderFraction = defenderStrength / attackerStrength;
+
+        float percentage = 50f;
+        if (attackerFraction < 1f)
+        {
+            percentage = (attackerFraction * 50f);
+        }
+        else
+        {
+            percentage = 100f - (defenderFraction * 50f);
+        }
+        _percentageValueText.text = $"{percentage:0}";
+    }
+
+    float CalculateAttackerStrength()
+    {
+        return Attacker.Health.CurrentHealthPoints;
+    }
+    float CalculateDefenderStrength()
+    {
+        return Defender.Health.CurrentHealthPoints;
     }
 }

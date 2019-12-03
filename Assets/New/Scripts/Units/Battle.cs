@@ -28,9 +28,9 @@ public class Battle : MonoBehaviour
     #endregion
 
     #region Progress
-    [Range(0, 100)]
-    [SerializeField] float _progress;
-    internal float Progress => _progress;
+    [Range(0, 1)]
+    [SerializeField] float _progressFraction;
+    internal float ProgressFraction => _progressFraction;
     #endregion
 
     #region Visual
@@ -128,6 +128,7 @@ public class Battle : MonoBehaviour
         {
             percentage = 100f - (defenderFraction * 50f);
         }
+        _progressFraction = percentage / 100f;
         _percentageValueText.text = $"{percentage:0}";
     }
 

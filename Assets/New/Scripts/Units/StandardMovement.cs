@@ -114,7 +114,17 @@ public class StandardMovement : UnitComponent
     {
         if (CurrentConnection)
         {
-            _connectionMovementFraction = Mathf.MoveTowards(_connectionMovementFraction, 1f, (CurrentMovementSpeed / 100f));
+            float maxMovementFractionFromBattle = 
+                (CurrentConnection.Battle.Defender) ? 
+                CurrentConnection.Battle.ProgressFraction :
+                1f;
+            _connectionMovementFraction = Mathf.MoveTowards
+            (
+                _connectionMovementFraction, 
+                maxMovementFractionFromBattle, 
+                (CurrentMovementSpeed / 100f)
+            );
+
             if (_connectionMovementFraction == 1f)
             {
                 CurrentNode = NextNode;

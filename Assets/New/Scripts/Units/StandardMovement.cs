@@ -23,6 +23,7 @@ public class StandardMovement : UnitComponent
     public static Action<StandardMovement, Node> NodeReachedAction;
     private void SetCurrentNode(Node value)
     {
+        _connectionMovementFraction = 0f;
         var oldNode = CurrentNode;
         if (oldNode)
         {
@@ -50,13 +51,8 @@ public class StandardMovement : UnitComponent
     {
         if (CurrentConnection) CurrentConnection._nodePathVisuals.Highlighted = false;
         _currentConnection = value;
-        if (CurrentConnection)
-        {
-            StartCoroutine(MoveAlongConnection());
-        }
         if (CurrentConnection) CurrentConnection._nodePathVisuals.Highlighted = true;
     }
-
 
     [SerializeField] Node _nextNode;
     public Node NextNode { get { return _nextNode; } set { SetNextNode(value); } }
@@ -90,11 +86,11 @@ public class StandardMovement : UnitComponent
 
     public void OnEnable()
     {
-        //DateManager.CurrentDayChangedAction += CurrentTurnChanged;
+        DateManager.CurrentHourChangedAction += HourStep;
     }
     public void OnDisable()
     {
-        //DateManager.CurrentDayChangedAction -= CurrentTurnChanged;
+        DateManager.CurrentHourChangedAction -= HourStep;
     }
 
     internal void Initialise(AbstractPlayerManager side, Node node)
@@ -113,25 +109,27 @@ public class StandardMovement : UnitComponent
         return 1f / nextNodePath._movementPointCost;
     }
 
-    private IEnumerator MoveAlongConnection()
+    float _connectionMovementFraction;
+    private void HourStep(int hourNum)
     {
-        Vector2 startPos = CurrentNode.transform.position;
-        Vector2 endPos = NextNode.transform.position;
-        float currentTime = 0f, moveTime = 10f / CurrentMovementSpeed;
-        while (currentTime < moveTime)
+        if (CurrentConnection)
         {
-            if (!CurrentConnection.Battle.Defender)
+            _connectionMovementFraction = Mathf.MoveTowards(_connectionMovementFraction, 1f, (CurrentMovementSpeed / 100f));
+            if (_connectionMovementFraction == 1f)
             {
-                float timeFraction = currentTime / moveTime;
-                //Debug.Log($"Time Fraction: {timeFration}");
-                transform.position = Vector2.Lerp(startPos, endPos, timeFraction);
-                currentTime += Time.deltaTime;
+                CurrentNode = NextNode;
+                NextNode = null;
             }
-            yield return null;
+            else
+            {
+                transform.position = Vector2.Lerp
+                (
+                    CurrentNode.transform.position,
+                    NextNode.transform.position,
+                    _connectionMovementFraction
+                );
+            }
         }
-        CurrentNode = NextNode;
-        NextNode = null;
-        CurrentMovementSpeed = BaseMovementSpeed;
     }
 
     Path _path;

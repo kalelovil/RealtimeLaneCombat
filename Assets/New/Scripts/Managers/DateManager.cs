@@ -23,12 +23,13 @@ public class DateManager : MonoBehaviour
 
     static List<float> SPEED_TO_SECONDS_PER_DAY = new List<float>
     {
-        5f,
-        2.25f,
+        2f,
         1f,
         0.5f,
+        0.25f,
+        0.1f,
     };
-    [SerializeField] int _speedIndex = 0;
+    [SerializeField] int _speedIndex = 1;
 
 
 

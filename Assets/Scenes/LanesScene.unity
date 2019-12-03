@@ -9584,6 +9584,17 @@ PrefabInstance:
       propertyPath: _cardHand
       value: 
       objectReference: {fileID: 1328991204}
+    - target: {fileID: 6063342953238241424, guid: 6b890709c8c64714eb3b08c617f9e242,
+        type: 3}
+      propertyPath: _onTopOfDeck.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6063342953238241424, guid: 6b890709c8c64714eb3b08c617f9e242,
+        type: 3}
+      propertyPath: _onTopOfDeck.Array.data[0]
+      value: 
+      objectReference: {fileID: 5842965824552520589, guid: 7f276a03f4fb07041b40407bf6c29171,
+        type: 3}
     - target: {fileID: 8825147873432816415, guid: 6b890709c8c64714eb3b08c617f9e242,
         type: 3}
       propertyPath: m_Name

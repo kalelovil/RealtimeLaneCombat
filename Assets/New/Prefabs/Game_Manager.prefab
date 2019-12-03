@@ -93,6 +93,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentHourNum: 1
+  _currentDayNum: 0
+  _speedIndex: 1
   _sideList:
   - {fileID: 4258591615597364500}
   - {fileID: 4258591613873487623}
@@ -143,3 +145,4 @@ MonoBehaviour:
   _currentLogisticPoints: 0
   _units: []
   _selectedUnit: {fileID: 0}
+  _isLocal: 1

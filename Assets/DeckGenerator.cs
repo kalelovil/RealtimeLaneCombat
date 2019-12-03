@@ -6,6 +6,10 @@ internal class DeckGenerator : MonoBehaviour
 {
     [SerializeField] List<CardBase> _cardPrefabList;
 
+    // Temp
+    [SerializeField] List<CardBase> _onTopOfDeck;
+    //
+
     internal Stack<CardBase> GenerateNewDeck(int numOfCards, Transform deckArea)
     {
         Stack<CardBase> newDeck = new Stack<CardBase>();
@@ -16,6 +20,11 @@ internal class DeckGenerator : MonoBehaviour
             var cardPrefabToAdd = _cardPrefabList[cardPrefabIndex];
 
             var newCard = Instantiate(cardPrefabToAdd, deckArea);
+            newDeck.Push(newCard);
+        }
+        foreach (var cardOnTop in _onTopOfDeck)
+        {
+            var newCard = Instantiate(cardOnTop, deckArea);
             newDeck.Push(newCard);
         }
 

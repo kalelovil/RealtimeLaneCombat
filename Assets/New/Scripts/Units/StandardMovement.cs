@@ -110,11 +110,13 @@ public class StandardMovement : UnitComponent
     }
 
     float _connectionMovementFraction;
+    float _lastMovementAt;
     private void HourStep(int hourNum)
     {
         if (CurrentConnection)
         {
-            _connectionMovementFraction = Mathf.MoveTowards
+            _lastMovementAt = Time.time;
+               _connectionMovementFraction = Mathf.MoveTowards
             (
                 _connectionMovementFraction,
                 CurrentConnection.MaxMovementFraction,
@@ -133,11 +135,11 @@ public class StandardMovement : UnitComponent
     {
         if (CurrentConnection)
         {
-            InterpolateMovement();
+            InterpolateFrameMovement();
         }
     }
 
-    private void InterpolateMovement()
+    private void InterpolateFrameMovement()
     {
         float visualConnectionMovementFraction = Mathf.MoveTowards
         (
@@ -145,6 +147,7 @@ public class StandardMovement : UnitComponent
             CurrentConnection.MaxMovementFraction,
             (CurrentMovementSpeed / 100f) * DateManager.Instance.CurrentFrameAsFractionOfHourStep()
         );
+        //Debug.Log($"Movement Fraction: {visualConnectionMovementFraction}");
 
         Vector2 visualPosition = Vector2.Lerp
         (

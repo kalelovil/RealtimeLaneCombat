@@ -18,6 +18,8 @@ public class StandardAttack : UnitComponent
     internal void DoDamage(NodeUnit recipient)
     {
         recipient.Health.TakeDamage(_attackPoints);
+        StopAllCoroutines();
+        StartCoroutine(AttackAnimationCoroutine(recipient.Health));
     }
 
     internal List<AttackUpgradeCardAbility> _upgradeList = new List<AttackUpgradeCardAbility>();
@@ -55,7 +57,7 @@ public class StandardAttack : UnitComponent
         return false;
     }
 
-    private IEnumerator AttackAnimationCoroutine(StandardHealth otherUnitHealth, AttackType attackType)
+    private IEnumerator AttackAnimationCoroutine(StandardHealth otherUnitHealth)
     {
         Debug.Log($"{name} Attacked {otherUnitHealth.name} for {_attackPoints} Damage.");
 
@@ -68,14 +70,7 @@ public class StandardAttack : UnitComponent
 
         // Play ParticleSystem for X Seconds
         _combatParticleSystem.Play();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(DateManager.Instance.CurrentSecondsPerDay);
         _combatParticleSystem.Stop();
-
-        // TODO Should attack cost equal path cost?
-        if (attackType == AttackType.Instigation)
-        {
-            NodeUnit.Movement.CurrentMovementSpeed -= 1;
-        }
-        //
     }
 }

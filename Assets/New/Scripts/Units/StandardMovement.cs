@@ -110,12 +110,38 @@ public class StandardMovement : UnitComponent
     }
 
     float _connectionMovementFraction;
+    private void Update()
+    {
+        if (CurrentConnection)
+        {
+            float timeSinceLastHourStep = Time.time - DateManager.Instance.TimeOfLastHourUpdate;
+            float frameAsFractionOfHourStep = timeSinceLastHourStep / DateManager.Instance.CurrentSecondsPerDay;
+            float maxMovementFractionFromBattle =
+                (CurrentConnection.Battle.Active) ?
+                CurrentConnection.Battle.ProgressFraction :
+                1f;
+            float visualConnectionMovementFraction = Mathf.MoveTowards
+            (
+                _connectionMovementFraction,
+                maxMovementFractionFromBattle,
+                (CurrentMovementSpeed / 100f) * frameAsFractionOfHourStep
+            );
+
+            Vector2 visualPosition = Vector2.Lerp
+            (
+                CurrentNode.transform.position,
+                NextNode.transform.position,
+                visualConnectionMovementFraction
+            );
+            transform.position = visualPosition;
+        }
+    }
     private void HourStep(int hourNum)
     {
         if (CurrentConnection)
         {
             float maxMovementFractionFromBattle = 
-                (CurrentConnection.Battle.Defender) ? 
+                (CurrentConnection.Battle.Active) ? 
                 CurrentConnection.Battle.ProgressFraction :
                 1f;
             _connectionMovementFraction = Mathf.MoveTowards
@@ -132,12 +158,7 @@ public class StandardMovement : UnitComponent
             }
             else
             {
-                transform.position = Vector2.Lerp
-                (
-                    CurrentNode.transform.position,
-                    NextNode.transform.position,
-                    _connectionMovementFraction
-                );
+
             }
         }
     }

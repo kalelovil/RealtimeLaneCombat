@@ -11,6 +11,7 @@ public class DateManager : MonoBehaviour
     [Header("Hour")]
     [SerializeField] int _currentHourNum;
     public int CurrentHourNum { get { return _currentHourNum; } }
+    public float TimeOfLastHourUpdate = 0f;
     internal static Action<int> CurrentHourChangedAction;
     #endregion
 
@@ -30,6 +31,7 @@ public class DateManager : MonoBehaviour
         0.1f,
     };
     [SerializeField] int _speedIndex = 1;
+    internal float CurrentSecondsPerDay=> SPEED_TO_SECONDS_PER_DAY[_speedIndex];
 
 
 
@@ -58,6 +60,7 @@ public class DateManager : MonoBehaviour
         if (_currentHourProgress >= SPEED_TO_SECONDS_PER_DAY[_speedIndex])
         {
             _currentHourNum++;
+            TimeOfLastHourUpdate = Time.time;
             CurrentHourChangedAction?.Invoke(_currentHourNum);
             _currentHourProgress = 0f;
         }

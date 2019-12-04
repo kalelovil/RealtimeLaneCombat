@@ -31,6 +31,8 @@ public class Battle : MonoBehaviour
     [Range(0, 1)]
     [SerializeField] float _progressFraction;
     internal float ProgressFraction => _progressFraction;
+
+    public bool Active { get { return Defender && Attacker; } }
     #endregion
 
     #region Visual
@@ -100,7 +102,7 @@ public class Battle : MonoBehaviour
 
     private void HourStep(int hourNum)
     {
-        if (_canvasGroup.alpha == 1f)
+        if (Active)
         {
             Attacker.Attack.DoDamage(Defender);
             if (Defender != null)

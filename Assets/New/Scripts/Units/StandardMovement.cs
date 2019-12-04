@@ -110,44 +110,14 @@ public class StandardMovement : UnitComponent
     }
 
     float _connectionMovementFraction;
-    private void Update()
-    {
-        if (CurrentConnection)
-        {
-            float timeSinceLastHourStep = Time.time - DateManager.Instance.TimeOfLastHourUpdate;
-            float frameAsFractionOfHourStep = timeSinceLastHourStep / DateManager.Instance.CurrentSecondsPerDay;
-            float maxMovementFractionFromBattle =
-                (CurrentConnection.Battle.Active) ?
-                CurrentConnection.Battle.ProgressFraction :
-                1f;
-            float visualConnectionMovementFraction = Mathf.MoveTowards
-            (
-                _connectionMovementFraction,
-                maxMovementFractionFromBattle,
-                (CurrentMovementSpeed / 100f) * frameAsFractionOfHourStep
-            );
-
-            Vector2 visualPosition = Vector2.Lerp
-            (
-                CurrentNode.transform.position,
-                NextNode.transform.position,
-                visualConnectionMovementFraction
-            );
-            transform.position = visualPosition;
-        }
-    }
     private void HourStep(int hourNum)
     {
         if (CurrentConnection)
         {
-            float maxMovementFractionFromBattle = 
-                (CurrentConnection.Battle.Active) ? 
-                CurrentConnection.Battle.ProgressFraction :
-                1f;
             _connectionMovementFraction = Mathf.MoveTowards
             (
-                _connectionMovementFraction, 
-                maxMovementFractionFromBattle, 
+                _connectionMovementFraction,
+                CurrentConnection.MaxMovementFraction,
                 (CurrentMovementSpeed / 100f)
             );
 
@@ -156,12 +126,35 @@ public class StandardMovement : UnitComponent
                 CurrentNode = NextNode;
                 NextNode = null;
             }
-            else
-            {
-
-            }
         }
     }
+
+    private void Update()
+    {
+        if (CurrentConnection)
+        {
+            InterpolateMovement();
+        }
+    }
+
+    private void InterpolateMovement()
+    {
+        float visualConnectionMovementFraction = Mathf.MoveTowards
+        (
+            _connectionMovementFraction,
+            CurrentConnection.MaxMovementFraction,
+            (CurrentMovementSpeed / 100f) * DateManager.Instance.CurrentFrameAsFractionOfHourStep()
+        );
+
+        Vector2 visualPosition = Vector2.Lerp
+        (
+            CurrentNode.transform.position,
+            NextNode.transform.position,
+            visualConnectionMovementFraction
+        );
+        transform.position = visualPosition;
+    }
+
 
     Path _path;
     internal void SetPath(Path path)

@@ -12,6 +12,8 @@ public class NodeConnection : MonoBehaviour
     [SerializeField] private Battle _battle;
     public Battle Battle => _battle;
 
+    public float MaxMovementFraction => (Battle.Active) ? Battle.ProgressFraction : 1f;
+
     [SerializeField] LineRenderer _lineRenderer;
     [SerializeField] internal Node _node1, _node2;
 

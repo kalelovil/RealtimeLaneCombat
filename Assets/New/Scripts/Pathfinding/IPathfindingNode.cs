@@ -9,7 +9,6 @@ namespace kalelovil.utility.pathfinding
     public interface IPathfindingNode : ISerializable
     {
         int NumOfActions { get; }
-        bool IsEmpty { get; }
         Vector3 PositionForHeuristic { get; }
 
         IEnumerable<IPathfindingNode> GetConnectedNodes();

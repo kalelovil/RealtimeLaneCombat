@@ -15,10 +15,10 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
 {
     #region PathfindingNode Interface
     public int NumOfActions { get { return 1; } }
-    public bool IsEmpty { get { return !_currentUnit; } }
+
     public bool BlocksUnit(NodeUnit unit)
     {
-        return unit && CurrentUnit && CurrentUnit.Side == unit.Side;
+        return unit && CurrentUnit && CurrentUnit.Side == unit.Side && !CurrentUnit.Movement.CurrentConnection;
     }
     public Vector3 PositionForHeuristic { get { return transform.position; } }
 

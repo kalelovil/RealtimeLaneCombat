@@ -95,58 +95,6 @@ namespace kalelovil.utility.pathfinding
             return null;
         }
 
-        public static Dictionary<IPathfindingNode, double> GetMovementCostArray(IPathfindingNode startNode, PathfindingType pathfindingType, int maxCost)
-        {
-            IPathfindingNode[] neighbourNodes = null;
-
-            IPathfindingNode neighbourNode;
-            cameFromArray.Clear();
-            costSoFarArray.Clear();
-            frontier.Clear();
-            currentNode = null;
-
-            frontier.Enqueue(startNode, 0);
-            cameFromArray[startNode] = null;
-            costSoFarArray[startNode] = 0.0;
-
-            while (frontier.NumItems > 0)
-            {
-                currentNode = frontier.Dequeue();
-
-                //float startTime = Time.realtimeSinceStartup;
-
-                neighbourNodes = currentNode.GetConnectedNodes().ToArray();
-                for (int i = 0; i < neighbourNodes.Length; i++)
-                {
-                    neighbourNode = neighbourNodes[i];
-                    if (neighbourNode != null && neighbourNode != startNode &&
-                        (neighbourNode.IsEmpty || pathfindingType == PathfindingType.Air))
-                    {
-                        //stepCost = GetTransportTimeToNextTileInDirection(currentPathfindingNode, i, isDirect);
-                        stepCost = 1;
-                        costSoFarArray.TryGetValue(neighbourNode, out currentLowestCost);
-                        newCost = currentLowestCost + stepCost;
-
-                        if ((currentLowestCost <= 0 || newCost < currentLowestCost) && newCost <= maxCost)
-                        {
-                            costSoFarArray[neighbourNode] = newCost;
-                            //if (pathfindingType == PathfindingType.Tile)
-                            //{
-                            //priority = 1.0 / (newCost + heuristic(endPathfindingNode, neighbourPathfindingNode));
-                            //} else
-                            //{
-                            priority = 1.0 / newCost;
-                            //}
-                            frontier.Enqueue(neighbourNode, priority);
-                            cameFromArray[neighbourNode] = currentNode;
-                        }
-                    }
-                }
-            }
-
-            return costSoFarArray;
-        }
-
         /*
         private static float GetTransportTimeToNextTileInDirection(PathfindingNode currentPathfindingNode, int directionIndex, bool isDirect)
         {

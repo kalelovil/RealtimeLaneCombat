@@ -115,7 +115,7 @@ PrefabInstance:
     - target: {fileID: 687857916280436204, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
       propertyPath: _attackPoints
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1070662668213011648, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}

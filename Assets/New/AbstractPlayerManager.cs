@@ -67,18 +67,18 @@ public abstract class AbstractPlayerManager : MonoBehaviour
 
     private void OnEnable()
     {
-        DateManager.CurrentDayChangedAction += CurrentTurnChanged;
+        DateManager.CurrentDayChangedAction += CurrentDayChanged;
         NodeUnit.UnitDestroyedAction += UnitDestroyed;
     }
 
 
     private void OnDisable()
     {
-        DateManager.CurrentDayChangedAction -= CurrentTurnChanged;
+        DateManager.CurrentDayChangedAction -= CurrentDayChanged;
         NodeUnit.UnitDestroyedAction -= UnitDestroyed;
     }
 
-    private void CurrentTurnChanged(int turnNum)
+    private void CurrentDayChanged(int turnNum)
     {
         TotalLogisticPoints++;
         CurrentLogisticPoints = TotalLogisticPoints;

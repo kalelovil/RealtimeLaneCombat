@@ -30,8 +30,10 @@ public class DateManager : MonoBehaviour
         0.25f,
         0.1f,
     };
+    int SpeedIndex { get { return _speedIndex; } set { _speedIndex = value; CurrentSpeedChangedAction?.Invoke(SpeedIndex); } }
     [SerializeField] int _speedIndex = 1;
     internal float CurrentSecondsPerDay => SPEED_TO_SECONDS_PER_DAY[_speedIndex];
+    internal static Action<int> CurrentSpeedChangedAction;
 
     internal float CurrentFrameAsFractionOfHourStep()
     {
@@ -67,8 +69,15 @@ public class DateManager : MonoBehaviour
         {
             _currentHourNum++;
             TimeOfLastHourUpdate = Time.time;
+            if (CurrentHourNum % 24 == 0)
+            {
+                _currentDayNum++;
+                _currentHourNum = 0;
+                CurrentDayChangedAction.Invoke(_currentDayNum);
+            }
             CurrentHourChangedAction?.Invoke(_currentHourNum);
             _currentHourProgress = 0f;
+
         }
     }
 
@@ -76,11 +85,11 @@ public class DateManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.Plus))
         {
-            if (_speedIndex < SPEED_TO_SECONDS_PER_DAY.Count - 1) _speedIndex++;
+            if (_speedIndex < SPEED_TO_SECONDS_PER_DAY.Count - 1) SpeedIndex++;
         }
         else if (Input.GetKeyDown(KeyCode.KeypadMinus) || Input.GetKeyDown(KeyCode.Minus))
         {
-            if (_speedIndex > 0) _speedIndex--;
+            if (_speedIndex > 0) SpeedIndex--;
         }
     }
 }

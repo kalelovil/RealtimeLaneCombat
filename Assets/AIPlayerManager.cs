@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AIPlayerManager : AbstractPlayerManager
 {
-
+    protected override bool IsLocal => false;
     public override LeftOrRight MapSide
     {
         get { return LeftOrRight.Right; }

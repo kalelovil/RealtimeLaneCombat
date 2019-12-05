@@ -43,11 +43,14 @@ public class Card_Hand : MonoBehaviour
         }
     }
 
-    private void LogisticPointsChanged(int current, int total)
+    private void LogisticPointsChanged(int current, int total, bool isLocal)
     {
-        foreach (var card in _cardsInHandList)
+        if (isLocal)
         {
-            card.IsPlayable = (CardBase.Playable)Convert.ToInt32(card.CanBePlayed());
+            foreach (var card in _cardsInHandList)
+            {
+                card.IsPlayable = (CardBase.Playable)Convert.ToInt32(card.CanBePlayed());
+            }
         }
     }
 

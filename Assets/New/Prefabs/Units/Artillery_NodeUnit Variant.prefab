@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 049473fdf20dd5c43a83dee4de6763b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackPoints: 2
+  _attackPoints: 3
   _combatParticleSystem: {fileID: 7699931437982858038}
 --- !u!1001 &7979063869606472118
 PrefabInstance:
@@ -21,26 +21,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4427010234864465718, guid: 9d14d05fa604dcb4a806d2102a792477,
-        type: 3}
-      propertyPath: m_Name
-      value: Artillery_NodeUnit Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 8361781304779089158, guid: 9d14d05fa604dcb4a806d2102a792477,
-        type: 3}
-      propertyPath: _standardAttack
-      value: 
-      objectReference: {fileID: 6195034856505633078}
-    - target: {fileID: 8361781304779089158, guid: 9d14d05fa604dcb4a806d2102a792477,
-        type: 3}
-      propertyPath: _unitType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8361781304779089158, guid: 9d14d05fa604dcb4a806d2102a792477,
-        type: 3}
-      propertyPath: _attack
-      value: 
-      objectReference: {fileID: 6195034856505633078}
     - target: {fileID: 191912970091346769, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -146,12 +126,46 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 9028953918830407676, guid: 9d14d05fa604dcb4a806d2102a792477,
+    - target: {fileID: 315518641185002112, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b218ad5500727604cafadc455782f679,
+      propertyPath: InitialModule.maxNumParticles
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 315518641185002112, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 315518641185002112, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 315518641185002112, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 315518641185002112, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: VelocityModule.x.scalar
+      value: 125
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070662668213011648, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: _hitPoints
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070662668213011648, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: _totalHealthPoints
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427010234864465718, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: m_Name
+      value: Artillery_NodeUnit Variant
+      objectReference: {fileID: 0}
     - target: {fileID: 4792998134944352243, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
       propertyPath: _movementPoints
@@ -180,43 +194,29 @@ PrefabInstance:
     - target: {fileID: 4792998134944352243, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
       propertyPath: _baseMovementSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8361781304779089158, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: _standardAttack
+      value: 
+      objectReference: {fileID: 6195034856505633078}
+    - target: {fileID: 8361781304779089158, guid: 9d14d05fa604dcb4a806d2102a792477,
+        type: 3}
+      propertyPath: _unitType
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1070662668213011648, guid: 9d14d05fa604dcb4a806d2102a792477,
+    - target: {fileID: 8361781304779089158, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
-      propertyPath: _hitPoints
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1070662668213011648, guid: 9d14d05fa604dcb4a806d2102a792477,
+      propertyPath: _attack
+      value: 
+      objectReference: {fileID: 6195034856505633078}
+    - target: {fileID: 9028953918830407676, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
-      propertyPath: _totalHealthPoints
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 315518641185002112, guid: 9d14d05fa604dcb4a806d2102a792477,
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b218ad5500727604cafadc455782f679,
         type: 3}
-      propertyPath: InitialModule.maxNumParticles
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 315518641185002112, guid: 9d14d05fa604dcb4a806d2102a792477,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 315518641185002112, guid: 9d14d05fa604dcb4a806d2102a792477,
-        type: 3}
-      propertyPath: InitialModule.startSizeY.scalar
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 315518641185002112, guid: 9d14d05fa604dcb4a806d2102a792477,
-        type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 315518641185002112, guid: 9d14d05fa604dcb4a806d2102a792477,
-        type: 3}
-      propertyPath: VelocityModule.x.scalar
-      value: 125
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 687857916280436204, guid: 9d14d05fa604dcb4a806d2102a792477, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9d14d05fa604dcb4a806d2102a792477, type: 3}

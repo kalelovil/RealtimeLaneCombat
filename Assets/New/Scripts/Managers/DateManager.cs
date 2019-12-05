@@ -83,6 +83,10 @@ public class DateManager : MonoBehaviour
 
     private void HandleInputs()
     {
+        if (Input.anyKey)
+        {
+            Debug.Log($"Key Down");
+        }
         if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.Plus))
         {
             if (_speedIndex < SPEED_TO_SECONDS_PER_DAY.Count - 1) SpeedIndex++;

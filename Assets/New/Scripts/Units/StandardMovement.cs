@@ -51,7 +51,25 @@ public class StandardMovement : UnitComponent
     {
         if (CurrentConnection) CurrentConnection._nodePathVisuals.Highlighted = false;
         _currentConnection = value;
-        if (CurrentConnection) CurrentConnection._nodePathVisuals.Highlighted = true;
+        if (CurrentConnection)
+        {
+            CurrentConnection._nodePathVisuals.Highlighted = true;
+
+            CurrentConnection.Battle.Attacker = NodeUnit;
+
+            float pathSpeedFactor = GetPathSpeedFactor(CurrentConnection);
+            CurrentMovementSpeed = BaseMovementSpeed * pathSpeedFactor;
+
+            if (NextNode.CurrentUnit && NextNode.CurrentUnit.Health && NodeUnit.Attack)
+            {
+                CurrentConnection.Battle.Defender = NextNode.CurrentUnit;
+            }
+        }
+        else
+        {
+            CurrentMovementSpeed = BaseMovementSpeed;
+        }
+
     }
 
     [SerializeField] Node _nextNode;
@@ -59,17 +77,7 @@ public class StandardMovement : UnitComponent
     private void SetNextNode(Node value)
     {
         _nextNode = value;
-
-        CurrentConnection = NextNode.GetConnectionToNode(CurrentNode);
-        CurrentConnection.Battle.Attacker = NodeUnit;
-
-        float pathSpeedFactor = GetPathSpeedFactor(CurrentConnection);
-        CurrentMovementSpeed = BaseMovementSpeed * pathSpeedFactor;
-
-        if (NextNode.CurrentUnit && NextNode.CurrentUnit.Health && NodeUnit.Attack)
-        {
-            CurrentConnection.Battle.Defender = NextNode.CurrentUnit;
-        }
+        CurrentConnection = (NextNode) ? NextNode.GetConnectionToNode(CurrentNode) : null;
     }
 
     internal Dictionary<MapTerrain.MapTerrainType, CanTraverseTerrain> _canTraverseTerrainMap = new Dictionary<MapTerrain.MapTerrainType, CanTraverseTerrain>();

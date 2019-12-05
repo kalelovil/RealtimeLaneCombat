@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class AbstractPlayerManager : MonoBehaviour
 {
+    protected abstract bool IsLocal { get; }
+
     public enum LeftOrRight
     {
         Left,
@@ -17,22 +19,22 @@ public abstract class AbstractPlayerManager : MonoBehaviour
     [Header("Logistic Points")]
     [SerializeField] int _totalLogisticPoints;
     public int TotalLogisticPoints { get { return _totalLogisticPoints; } set { SetTotalLogisticPoints(value); } }
-    internal static Action<int, int> TotalLogisticPointsChangedAction;
+    internal static Action<int, int, bool> TotalLogisticPointsChangedAction;
     private void SetTotalLogisticPoints(int value)
     {
         _totalLogisticPoints = value;
 
-        TotalLogisticPointsChangedAction?.Invoke(CurrentLogisticPoints, TotalLogisticPoints);
+        TotalLogisticPointsChangedAction?.Invoke(CurrentLogisticPoints, TotalLogisticPoints, IsLocal);
 
     }
 
     [SerializeField] int _currentLogisticPoints;
     public int CurrentLogisticPoints { get { return _currentLogisticPoints; } set { SetCurrentLogisticPoints(value); } }
-    internal static Action<int, int> CurrentLogisticPointsChangedAction;
+    internal static Action<int, int, bool> CurrentLogisticPointsChangedAction;
     private void SetCurrentLogisticPoints(int value)
     {
         _currentLogisticPoints = value;
-        CurrentLogisticPointsChangedAction?.Invoke(CurrentLogisticPoints, TotalLogisticPoints);
+        CurrentLogisticPointsChangedAction?.Invoke(CurrentLogisticPoints, TotalLogisticPoints, IsLocal);
     }
     #endregion
 
@@ -93,6 +95,6 @@ public abstract class AbstractPlayerManager : MonoBehaviour
 
     protected void Start()
     {
-
+        TotalLogisticPointsChangedAction?.Invoke(CurrentLogisticPoints, TotalLogisticPoints, IsLocal);
     }
 }

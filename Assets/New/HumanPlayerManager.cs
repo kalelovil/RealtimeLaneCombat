@@ -8,6 +8,7 @@ public class HumanPlayerManager : AbstractPlayerManager
     public static HumanPlayerManager Instance;
 
     [SerializeField] bool _isLocal;
+    protected override bool IsLocal => _isLocal;
 
     public override LeftOrRight MapSide
     {

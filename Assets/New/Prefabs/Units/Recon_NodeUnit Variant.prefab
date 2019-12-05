@@ -115,7 +115,7 @@ PrefabInstance:
     - target: {fileID: 687857916280436204, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
       propertyPath: _attackPoints
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1070662668213011648, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
@@ -150,7 +150,7 @@ PrefabInstance:
     - target: {fileID: 4792998134944352243, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}
       propertyPath: _baseMovementSpeed
-      value: 6
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8361781304779089158, guid: 9d14d05fa604dcb4a806d2102a792477,
         type: 3}

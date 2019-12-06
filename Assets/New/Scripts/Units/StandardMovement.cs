@@ -40,6 +40,10 @@ public class StandardMovement : UnitComponent
         _currentNode = value;
         transform.position = _currentNode.transform.position;
         CurrentNode.CurrentUnit = NodeUnit;
+        foreach (var connection in CurrentNode._nodePaths.Values)
+        {
+            connection.Battle.AddAttackerSupportUnit(NodeUnit);
+        }
         NodeReachedAction.Invoke(this, CurrentNode);
 
         CurrentConnection = null;

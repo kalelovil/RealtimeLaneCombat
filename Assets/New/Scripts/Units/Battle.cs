@@ -67,7 +67,13 @@ public class Battle : MonoBehaviour
         }
     }
 
-    List<NodeUnit> _attackerSupport = new List<NodeUnit>(), _defenderSupport = new List<NodeUnit>();
+    List<NodeUnit> _attackerSupport = new List<NodeUnit>();
+    internal void AddAttackerSupportUnit(NodeUnit nodeUnit)
+    {
+        _attackerSupport.Add(nodeUnit);
+    }
+
+    List<NodeUnit>_defenderSupport = new List<NodeUnit>();
 
     private void OnEnable()
     {
@@ -105,6 +111,11 @@ public class Battle : MonoBehaviour
         if (Active)
         {
             Attacker.Attack.DoDamage(Defender);
+            foreach (var attackSupport in _attackerSupport)
+            {
+                attackSupport.Attack.DoDamage(Defender);
+            }
+
             if (Defender != null)
             {
                 Defender.Attack.DoDamage(Attacker);

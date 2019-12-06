@@ -38,25 +38,39 @@ public class StandardMovement : UnitComponent
         }
 
         _currentNode = value;
-        transform.position = _currentNode.transform.position;
-        CurrentNode.CurrentUnit = NodeUnit;
-        foreach (var connection in CurrentNode._nodePaths.Values)
+        if (CurrentNode)
         {
-            connection.Battle.AddAttackerSupportUnit(NodeUnit);
-        }
-        NodeReachedAction.Invoke(this, CurrentNode);
+            transform.position = _currentNode.transform.position;
+            CurrentNode.CurrentUnit = NodeUnit;
+            foreach (var connection in CurrentNode._nodePaths.Values)
+            {
+                connection.Battle.AddAttackerSupportUnit(NodeUnit);
+            }
+            NodeReachedAction.Invoke(this, CurrentNode);
 
-        CurrentConnection = null;
+            CurrentConnection = null;
+        }
     }
 
     [SerializeField] NodeConnection _currentConnection;
     public NodeConnection CurrentConnection { get { return _currentConnection; } private set { SetCurrentConnection(value); } }
     private void SetCurrentConnection(NodeConnection value)
     {
-        if (CurrentConnection) CurrentConnection._nodePathVisuals.Highlighted = false;
-        _currentConnection = value;
         if (CurrentConnection)
         {
+            CurrentConnection._nodePathVisuals.Highlighted = false;
+            if (CurrentConnection.Battle.Attacker == NodeUnit)
+            {
+                CurrentConnection.Battle.Attacker = null;
+            }
+        }
+
+        _currentConnection = value;
+
+        if (CurrentConnection)
+        {
+            CurrentNode = null;
+
             CurrentConnection._nodePathVisuals.Highlighted = true;
 
             CurrentConnection.Battle.Attacker = NodeUnit;
@@ -161,10 +175,14 @@ public class StandardMovement : UnitComponent
         );
         //Debug.Log($"Movement Fraction: {visualConnectionMovementFraction}");
 
+        if (NextNode == CurrentConnection._node1)
+        {
+            visualConnectionMovementFraction = 1f - visualConnectionMovementFraction;
+        }
         Vector2 visualPosition = Vector2.Lerp
         (
-            CurrentNode.transform.position,
-            NextNode.transform.position,
+            CurrentConnection._node1.transform.position,
+            CurrentConnection._node2.transform.position,
             visualConnectionMovementFraction
         );
         transform.position = visualPosition;
@@ -184,7 +202,11 @@ public class StandardMovement : UnitComponent
         {
             if (!CurrentConnection)
             {
-                NextNode = (Node)_path.Pop();
+                var NextConnection = ((Node)_path.Peek()).GetConnectionToNode(CurrentNode);
+                if (!NextConnection.Battle.Attacker)
+                {
+                    NextNode = (Node)_path.Pop();
+                }
             }
             yield return null;
         }

@@ -67,13 +67,13 @@ public class Battle : MonoBehaviour
         }
     }
 
-    List<NodeUnit> _attackerSupport = new List<NodeUnit>();
-    internal void AddAttackerSupportUnit(NodeUnit nodeUnit)
+    List<ArtilleryAttack> _attackerSupport = new List<ArtilleryAttack>();
+    internal void AddAttackerSupportUnit(ArtilleryAttack artilleryAttack)
     {
-        _attackerSupport.Add(nodeUnit);
+        _attackerSupport.Add(artilleryAttack);
     }
 
-    List<NodeUnit>_defenderSupport = new List<NodeUnit>();
+    List<ArtilleryAttack>_defenderSupport = new List<ArtilleryAttack>();
 
     private void OnEnable()
     {
@@ -88,21 +88,27 @@ public class Battle : MonoBehaviour
     }
     private void UnitDestroyed(NodeUnit unit)
     {
-        if (Attacker == unit)
+        if (unit.Attack && unit.Attack is ArtilleryAttack)
         {
-            Attacker = null;
+            if (_attackerSupport.Contains((ArtilleryAttack)unit.Attack))
+            {
+                _attackerSupport.Remove((ArtilleryAttack)unit.Attack);
+            }
+            else if (_defenderSupport.Contains((ArtilleryAttack)unit.Attack))
+            {
+                _defenderSupport.Remove(((ArtilleryAttack)unit.Attack));
+            }
         }
-        else if (Defender == unit)
+        else
         {
-            Defender = null;
-        }
-        else if (_attackerSupport.Contains(unit))
-        {
-            _attackerSupport.Remove(unit);
-        }
-        else if (_defenderSupport.Contains(unit))
-        {
-            _defenderSupport.Remove(unit);
+            if (Attacker == unit)
+            {
+                Attacker = null;
+            }
+            else if (Defender == unit)
+            {
+                Defender = null;
+            }
         }
     }
 
@@ -113,7 +119,7 @@ public class Battle : MonoBehaviour
             Attacker.Attack.DoDamage(Defender);
             foreach (var attackSupport in _attackerSupport)
             {
-                attackSupport.Attack.DoDamage(Defender);
+                attackSupport.DoDamage(Defender);
             }
 
             if (Defender != null)

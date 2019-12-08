@@ -72,6 +72,8 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
         CardBase.CardSelectedAction += CardSelected;
         AbstractPlayerManager.UnitSelectedAction += UnitSelected;
         StandardMovement.NodeReachedAction += MovableUnitNodeSet;
+        NodeUnit.UnitDestroyedAction += UnitDestroyed;
+
     }
 
     public void OnDisable()
@@ -79,8 +81,16 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
         CardBase.CardSelectedAction -= CardSelected;
         AbstractPlayerManager.UnitSelectedAction -= UnitSelected;
         StandardMovement.NodeReachedAction -= MovableUnitNodeSet;
+        NodeUnit.UnitDestroyedAction -= UnitDestroyed;
     }
 
+    private void UnitDestroyed(NodeUnit unit)
+    {
+        if (unit.Movement.CurrentNode == this)
+        {
+            CurrentUnit = null;
+        }
+    }
 
     private void CardSelected(CardBase selectedCard)
     {

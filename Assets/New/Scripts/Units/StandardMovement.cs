@@ -44,7 +44,10 @@ public class StandardMovement : UnitComponent
             CurrentNode.CurrentUnit = NodeUnit;
             foreach (var connection in CurrentNode._nodePaths.Values)
             {
-                connection.Battle.AddAttackerSupportUnit(NodeUnit);
+                if (NodeUnit.Attack is ArtilleryAttack)
+                {
+                    connection.Battle.AddAttackerSupportUnit((ArtilleryAttack)NodeUnit.Attack);
+                }
             }
             NodeReachedAction.Invoke(this, CurrentNode);
 
@@ -123,10 +126,6 @@ public class StandardMovement : UnitComponent
     {
         _image.color = side.Colour;
         CurrentNode = node;
-    }
-    private void OnDestroy()
-    {
-        CurrentNode.CurrentUnit = null;
     }
 
     private float GetPathSpeedFactor(NodeConnection nextNodePath)

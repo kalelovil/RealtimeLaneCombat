@@ -32,7 +32,7 @@ public class Battle : MonoBehaviour
     [SerializeField] float _progressFraction;
     internal float ProgressFraction => _progressFraction;
 
-    public bool Active { get { return Defender && Attacker; } }
+    public bool Active { get { return Defender && (Attacker || _attackerSupport.Count > 0); } }
     #endregion
 
     #region Visual
@@ -50,7 +50,7 @@ public class Battle : MonoBehaviour
 
     private void ParticipantsChanged()
     {
-        if (Attacker && Defender)
+        if ((Attacker || _attackerSupport.Count > 0) && Defender)
         {
             Debug.Log("Attacker And Defender Set");
             if (_canvasGroup.alpha == 0f)
@@ -71,6 +71,7 @@ public class Battle : MonoBehaviour
     internal void AddAttackerSupportUnit(ArtilleryAttack artilleryAttack)
     {
         _attackerSupport.Add(artilleryAttack);
+        ParticipantsChanged();
     }
 
     List<ArtilleryAttack>_defenderSupport = new List<ArtilleryAttack>();
@@ -116,7 +117,7 @@ public class Battle : MonoBehaviour
     {
         if (Active)
         {
-            Attacker.Attack.DoDamage(Defender);
+            if (Attacker) Attacker.Attack.DoDamage(Defender);
             foreach (var attackSupport in _attackerSupport)
             {
                 attackSupport.DoDamage(Defender);

@@ -46,6 +46,14 @@ public class StandardMovement : UnitComponent
             {
                 if (NodeUnit.Attack is ArtilleryAttack)
                 {
+                    if (connection._node1 == CurrentNode)
+                    {
+                        connection.Battle.Defender = connection._node2.CurrentUnit;
+                    }
+                    else if (connection._node2 == CurrentNode)
+                    {
+                        connection.Battle.Defender = connection._node1.CurrentUnit;
+                    }
                     connection.Battle.AddAttackerSupportUnit((ArtilleryAttack)NodeUnit.Attack);
                 }
             }

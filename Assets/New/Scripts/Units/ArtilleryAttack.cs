@@ -6,7 +6,7 @@ public class ArtilleryAttack : StandardAttack
 {
     internal override bool NodeInRange(Node node)
     {
-        foreach (var path in node._nodePaths)
+        foreach (var path in node._nodeConnections)
         {
             if (base.NodeInRange(path.Value._node1) || base.NodeInRange(path.Value._node2))
             {

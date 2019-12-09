@@ -30,7 +30,7 @@ public class StandardMovement : UnitComponent
             // TODO Turn into event
             oldNode.CurrentUnit = null;
             // Remove As Defender For All Connected Nodes
-            foreach (var connection in oldNode._nodePaths.Values)
+            foreach (var connection in oldNode._nodeConnections.Values)
             {
                 if (connection.Battle.Defender == this) connection.Battle.Defender = null;
             }
@@ -42,7 +42,7 @@ public class StandardMovement : UnitComponent
         {
             transform.position = _currentNode.transform.position;
             CurrentNode.CurrentUnit = NodeUnit;
-            foreach (var connection in CurrentNode._nodePaths.Values)
+            foreach (var connection in CurrentNode._nodeConnections.Values)
             {
                 if (NodeUnit.Attack is ArtilleryAttack)
                 {

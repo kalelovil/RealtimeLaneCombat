@@ -123,7 +123,7 @@ public class Battle : MonoBehaviour
                 attackSupport.DoDamage(Defender);
             }
 
-            if (Defender != null)
+            if (Defender != null && Attacker != null)
             {
                 Defender.Attack.DoDamage(Attacker);
                 UpdatePercentage();

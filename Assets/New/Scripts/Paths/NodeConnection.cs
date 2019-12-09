@@ -14,7 +14,7 @@ public class NodeConnection : MonoBehaviour
 
     public float MaxMovementFraction => (Battle.Active) ? Battle.ProgressFraction : 1f;
 
-    [SerializeField] LineRenderer _lineRenderer;
+    [SerializeField] internal LineRenderer _lineRenderer;
     [SerializeField] internal Node _node1, _node2;
 
     #region Feature
@@ -87,11 +87,11 @@ public class NodeConnection : MonoBehaviour
     {
         if (_node1)
         {
-            _node1._nodePaths.Remove(_node2);
+            _node1._nodeConnections.Remove(_node2);
         }
         if (_node2)
         {
-            _node2._nodePaths.Remove(_node1);
+            _node2._nodeConnections.Remove(_node1);
         }
     }
 }

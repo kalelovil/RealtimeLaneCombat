@@ -24,11 +24,11 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
 
     public IEnumerable<IPathfindingNode> GetConnectedNodes()
     {
-        return _nodePaths.Keys;
+        return _nodeConnections.Keys;
     }
     public NodeConnection GetConnectionToNode(IPathfindingNode destinationNode)
     {
-        _nodePaths.TryGetValue((Node)destinationNode, out var returnConnection);
+        _nodeConnections.TryGetValue((Node)destinationNode, out var returnConnection);
         return returnConnection;
     } 
     #endregion
@@ -38,7 +38,7 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
     [SerializeField] NodeConnection _nodePathPrefab;
 
     // TODO Rename to NodeConnections
-    [SerializeField] public NodeToConnectionMap _nodePaths = new NodeToConnectionMap();
+    [SerializeField] public Dictionary<Node, NodeConnection> _nodeConnections = new Dictionary<Node, NodeConnection>();
 
 
     // Current Unit
@@ -155,9 +155,9 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
             {
                 if (NodeConnection._currentlyPlacedNodePath._node1 != this)
                 {
-                    NodeConnection._currentlyPlacedNodePath._node1._nodePaths.Add(this, NodeConnection._currentlyPlacedNodePath);
+                    NodeConnection._currentlyPlacedNodePath._node1._nodeConnections.Add(this, NodeConnection._currentlyPlacedNodePath);
                     NodeConnection._currentlyPlacedNodePath._node2 = this;
-                    _nodePaths.Add(NodeConnection._currentlyPlacedNodePath._node1, NodeConnection._currentlyPlacedNodePath);
+                    _nodeConnections.Add(NodeConnection._currentlyPlacedNodePath._node1, NodeConnection._currentlyPlacedNodePath);
                     NodeConnection._currentlyPlacedNodePath = null;
                 }
             }

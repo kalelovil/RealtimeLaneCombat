@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(Node))]
+[CanEditMultipleObjects]
 public class NodeEditor : Editor
 {
     Node _myTarget;

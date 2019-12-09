@@ -44,7 +44,7 @@ public class StandardAttack : UnitComponent
 
     internal virtual bool NodeInRange(Node node)
     {
-        foreach (var path in node._nodePaths)
+        foreach (var path in node._nodeConnections)
         {
             if (path.Value._node1 == NodeUnit.Movement.CurrentNode || path.Value._node2 == NodeUnit.Movement.CurrentNode)
             {

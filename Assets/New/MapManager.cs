@@ -67,6 +67,25 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    public void ShortenConnections()
+    {
+        Node[] nodes = FindObjectsOfType<Node>();
+        NodeConnection[] connections = FindObjectsOfType<NodeConnection>();
+
+        float newStartFraction = 0.1f, newEndFraction = 1f - newStartFraction;
+        foreach (NodeConnection connection in connections)
+        {
+            Vector3 startPosition = connection._lineRenderer.GetPosition(0);
+            Vector3 endPosition = connection._lineRenderer.GetPosition(1);
+
+            Vector3 newStartPosition = ((startPosition * newEndFraction) + (endPosition * newStartFraction)) / 2f;
+            Vector3 newEndPosition = ((startPosition * newStartFraction) + (endPosition * newEndFraction)) / 2f;
+
+            connection._lineRenderer.SetPosition(0, newStartPosition);
+            connection._lineRenderer.SetPosition(1, newEndPosition);
+        }
+    }
+
     private Node GetClosestNodeTo(NodeConnection connection, int index, Node[] nodes)
     {
         Vector2 pos = connection._lineRenderer.GetPosition(index);

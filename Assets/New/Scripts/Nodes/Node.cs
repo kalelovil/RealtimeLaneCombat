@@ -43,6 +43,7 @@ public class Node : MonoBehaviour, IPointerClickHandler, IPathfindingNode
 
     // Current Unit
     [SerializeField] NodeUnit _currentUnit;
+
     public NodeUnit CurrentUnit { get { return _currentUnit; } set { SetCurrentUnit(value); } }
     void SetCurrentUnit(NodeUnit value)
     {

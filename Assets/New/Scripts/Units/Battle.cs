@@ -113,6 +113,14 @@ public class Battle : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Attacker && Defender)
+        {
+            transform.position = (Attacker.transform.position + Defender.transform.position) / 2f;
+        } 
+    }
+
     private void HourStep(int hourNum)
     {
         if (Active)

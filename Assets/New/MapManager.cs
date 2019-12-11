@@ -17,7 +17,8 @@ public class MapManager : MonoBehaviour
 
     private void Awake()
     {
-        RegenerateConnectionReferences();
+        //RegenerateConnectionReferences();
+        SetConnectionReferences();
         Instance = this;
     }
 
@@ -37,7 +38,7 @@ public class MapManager : MonoBehaviour
 
     private void OnValidate()
     {
-        RegenerateConnectionReferences();
+        //RegenerateConnectionReferences();
         Instance = this;
     }
 
@@ -47,6 +48,21 @@ public class MapManager : MonoBehaviour
         Path path = Pathfinder.GetPathOfTypeForUnit(startNode, endNode, pathfindingType, null);
         //
         return path?._pathNodeStack.Count;
+    }
+
+    private void SetConnectionReferences()
+    {
+        Node[] nodes = FindObjectsOfType<Node>();
+        NodeConnection[] connections = FindObjectsOfType<NodeConnection>();
+
+        foreach (NodeConnection connection in connections)
+        {
+            var node1 = connection._node1;
+            var node2 = connection._node2;
+
+            node1._nodeConnections[node2] = connection;
+            node2._nodeConnections[node1] = connection;
+        }
     }
 
     public void RegenerateConnectionReferences()
@@ -88,5 +104,10 @@ public class MapManager : MonoBehaviour
             }
         }
         throw new InvalidOperationException($"No Node Found At Position: {pos}");
+    }
+
+    public void ShortenConnections()
+    {
+        throw new NotImplementedException();
     }
 }

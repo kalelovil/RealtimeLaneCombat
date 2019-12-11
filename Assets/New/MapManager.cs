@@ -105,9 +105,4 @@ public class MapManager : MonoBehaviour
         }
         throw new InvalidOperationException($"No Node Found At Position: {pos}");
     }
-
-    public void ShortenConnections()
-    {
-        throw new NotImplementedException();
-    }
 }

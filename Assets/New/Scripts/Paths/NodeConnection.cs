@@ -71,6 +71,17 @@ public class NodeConnection : MonoBehaviour
             Vector2 midPoint = ((_lineRenderer.GetPosition(0) + _lineRenderer.GetPosition(1)) / 2f);
             _movementPointText.transform.position = midPoint + new Vector2(0f, _textYOffset);
             _movementPointText.text = $"{_movementPointCost}";
+
+
+            float newStartFraction = 0.25f, newEndFraction = 1f - newStartFraction;
+            Vector3 startPosition = _lineRenderer.GetPosition(0);
+            Vector3 endPosition = _lineRenderer.GetPosition(1);
+
+            Vector3 newStartPosition = ((startPosition * newEndFraction) + (endPosition * newStartFraction));
+            Vector3 newEndPosition = ((startPosition * newStartFraction) + (endPosition * newEndFraction));
+
+            _lineRenderer.SetPosition(0, newStartPosition);
+            _lineRenderer.SetPosition(1, newEndPosition);
         }
 
         // Position Path Feature

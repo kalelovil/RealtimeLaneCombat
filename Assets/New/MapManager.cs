@@ -64,6 +64,12 @@ public class MapManager : MonoBehaviour
 
             node1._nodeConnections[node2] = connection;
             node2._nodeConnections[node1] = connection;
+
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(connection);
+            UnityEditor.EditorUtility.SetDirty(node1);
+            UnityEditor.EditorUtility.SetDirty(node2);
+#endif
         }
     }
 

@@ -21,7 +21,7 @@ public class MapManagerEditor : Editor
 
         if (GUILayout.Button("Regenerate Connection References"))
         {
-            _myTarget.RegenerateConnectionReferences();
+            //_myTarget.RegenerateConnectionReferences();
         }
 
         if (GUILayout.Button("Shorten Connections"))

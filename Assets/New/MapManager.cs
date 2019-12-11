@@ -17,7 +17,7 @@ public class MapManager : MonoBehaviour
 
     private void Awake()
     {
-        RegenerateConnectionReferences();
+        //RegenerateConnectionReferences();
         Instance = this;
     }
 
@@ -37,7 +37,7 @@ public class MapManager : MonoBehaviour
 
     private void OnValidate()
     {
-        RegenerateConnectionReferences();
+        //RegenerateConnectionReferences();
         Instance = this;
     }
 
@@ -49,6 +49,7 @@ public class MapManager : MonoBehaviour
         return path?._pathNodeStack.Count;
     }
 
+    /*
     public void RegenerateConnectionReferences()
     {
         Node[] nodes = FindObjectsOfType<Node>();
@@ -66,6 +67,7 @@ public class MapManager : MonoBehaviour
             node2._nodeConnections[node1] = connection;
         }
     }
+    */
 
     public void ShortenConnections()
     {

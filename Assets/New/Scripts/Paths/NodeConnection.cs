@@ -73,12 +73,11 @@ public class NodeConnection : MonoBehaviour
             _movementPointText.text = $"{_movementPointCost}";
 
 
-            float newStartFraction = 0.25f, newEndFraction = 1f - newStartFraction;
             Vector3 startPosition = _lineRenderer.GetPosition(0);
             Vector3 endPosition = _lineRenderer.GetPosition(1);
 
-            Vector3 newStartPosition = ((startPosition * newEndFraction) + (endPosition * newStartFraction));
-            Vector3 newEndPosition = ((startPosition * newStartFraction) + (endPosition * newEndFraction));
+            Vector3 newStartPosition = Vector2.MoveTowards(startPosition, midPoint, 92f);
+            Vector3 newEndPosition = Vector2.MoveTowards(endPosition, midPoint, 92f);
 
             _lineRenderer.SetPosition(0, newStartPosition);
             _lineRenderer.SetPosition(1, newEndPosition);

@@ -228,4 +228,12 @@ public class StandardMovement : UnitComponent
         }
         CurrentMovementSpeed = BaseMovementSpeed;
     }
+
+    private void OnValidate()
+    {
+        if (CurrentNode)
+        {
+            transform.position = CurrentNode.transform.position;
+        }
+    }
 }

@@ -188,8 +188,8 @@ public class StandardMovement : UnitComponent
         }
         Vector2 visualPosition = Vector2.Lerp
         (
-            CurrentConnection._node1.transform.position,
-            CurrentConnection._node2.transform.position,
+            CurrentConnection._lineRenderer.GetPosition(0),
+            CurrentConnection._lineRenderer.GetPosition(1),
             visualConnectionMovementFraction
         );
         transform.position = visualPosition;
